@@ -90,3 +90,32 @@ sqrt(vec) # square root
 log(vec) # natural log
 log10(vec) # log base 10
 exp(vec) # power of e
+
+#logical operators
+# > is greater than
+1 > 2 
+# < is less than
+1 < 2 
+# <= is less than or equal to, >= greater than or equal to, != not equal 
+1 <= 2 
+1 >= 2
+1 != 2
+# == is exactly equal to
+1 == 1
+# = is used to assign values left to right. similar to <- but often in functions where <- is reserved for objects
+# | means 'OR'
+1 == 2 | 1 == 1 
+# & means 'AND' 
+1 == 2 & 1 == 1 
+1 == 1 & 1 == 1 
+# numeric vector
+t <- 1:10 
+
+t[(t > 8) | (t < 5)]  # only the numbers that are greater than 8 or less than 5
+t[(t > 8) & (t < 10)]  # returns 9
+t[t != 2]  # returns elements of t that are not exactly equal to 2
+t[!t == 2] # multiple ways to do the same thing
+2 %in% t #asks if the item between % _ % is found within
+
+
+

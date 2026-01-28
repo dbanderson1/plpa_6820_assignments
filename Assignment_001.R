@@ -61,6 +61,32 @@ print(class(excited))
 print(age)
 print(class(age))
 
+#concatenate function
+#here we are using c() to make vectors
+#we can make any class vector similar to above (numeric, character, integer, logical)
+vec <- c(1, 2, 3, 4, 5, 6, 7)
+vec1 <- c(1:7)
+vec2 <- 1:7
+vec3 <- c("zach", "derek", "brenda")
+vec4 <- c(TRUE, FALSE, TRUE)
+#choosing an item within a vector
+#use [] to select a number within a vector
+vec[3]
+vec3[3]
+#you can do operations with your vectors
+vec2 + 2
 
-
-
+#basic functions built into R
+vec <- c(1, 2, 3, 4, 5, 6, 7)
+mean(vec)  # mean
+sd(vec)  # standard deviation
+sum(vec)  # sum
+median(vec)  # median
+min(vec)  # minimum 
+max(vec)  # maximum
+summary(vec)  #IQR - output depends on the data class
+abs(vec) # absolute value
+sqrt(vec) # square root
+log(vec) # natural log
+log10(vec) # log base 10
+exp(vec) # power of e

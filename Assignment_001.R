@@ -212,7 +212,7 @@ install.packages("tidyverse")
 library("tidyverse")
 #lme4
 install.packages("lme4")
-library(lme3)
+library(lme4)
 # purrr
 install.packages("purrr")
 library(purrr)
@@ -239,4 +239,18 @@ csv <- read.csv("anthro.csv", na.strings = "NA")
 # this was not part of the assignment, just me using parts from exercises 1-9 with the file I just imported
 # lets start by adding a new column for bmi which is a function of height and weight
 csv$bmi <- csv$wt_kg / ( (csv$ht_cm / 100) ^ 2 )
+# next lets make character category for BMI
+csv$bmi_cat <- ifelse(csv$bmi < 25, "Normal weight", "Overweight")
+# summary statistics
+print(summary(csv))
+# you see that you can't get summary stats for character so we will use frequencies for BMI cat
+print(table(csv$bmi_cat))
+# using ggplot2 to create a scatter plot
+plot(
+  csv$ht_cm,
+  csv$wt_kg,
+  xlab = "Height (cm)",
+  ylab = "Weight (kg)",
+  main = "Height vs Weight"
+)
 

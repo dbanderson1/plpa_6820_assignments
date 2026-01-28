@@ -24,3 +24,31 @@ print(is_perfect)
 print(above_average)
 print(not_failing)
 print(needs_improvement)
+
+#Operators Part 2 Challenge
+# Given variables
+age <- 17
+has_permission <- TRUE
+is_member <- FALSE
+has_ticket <- TRUE
+
+# TODO: Write your code below
+# Create the following variables using logical operators (&&, ||):
+# 1. can_enter_club - TRUE if age >= 18 AND is_member
+can_enter_club <- age >= 18 && is_member
+# 2. can_watch_movie - TRUE if age >= 18 OR has_permission
+can_watch_movie <- age >= 18 || has_permission
+# 3. can_attend_event - TRUE if has_ticket AND is_member
+can_attend_event <- has_ticket && is_member
+# 4. gets_discount - TRUE if is_member OR age < 18
+gets_discount <- age < 18 || is_member
+# 5. vip_access - TRUE if age >= 18 AND is_member AND has_ticket
+vip_access <- age >= 18 && is_member && has_ticket
+
+# Print the results in order
+print(can_enter_club)
+print(can_watch_movie)
+print(can_attend_event)
+print(gets_discount)
+print(vip_access)
+

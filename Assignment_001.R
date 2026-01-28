@@ -204,5 +204,39 @@ subset(df, name == "Jie")
 df$log_value <- log(df$value) # create a new column with the column header named "log_value" and create this variable with the log of the "value" column
 df
 
-#### Installing Packages ####
+#### Exercise 8 - Installing Packages ####
+# An R package is a group a functions called base. It is an open source language and different people can write and you can download a few.
+## first you need to download the package. Then you need to load it.
+#tidyverse
+install.packages("tidyverse")
+library("tidyverse")
+#lme4
+install.packages("lme4")
+library(lme3)
+# purrr
+install.packages("purrr")
+library(purrr)
+#dplyr
+install.packages("dplyr")
+library(dplyr)
+#ggplot2
+install.packages("ggplot2")
+library(ggplot2)
+#emmeans
+install.packages("emmeans")
+library(emmeans)
+
+#### Exercise 9 - Reading Data to R ####
+# This is an extremely important step 
+# CSV or TXT, we use read.csv function
+# coding missing data - there are many ways to do this
+# my file is located here - "C:\Users\derek\OneDrive\Documents\RStudio\plpa_6820_assignments\anthro.csv"
+# the above is an absolute file format, however if you place it directly into your repository you can use relative anthro.csv
+csv <- read.csv("anthro.csv", na.strings = "NA")
+# you can also use the file choose function
+
+#### Exercise 10 - Messing Around ####
+# this was not part of the assignment, just me using parts from exercises 1-9 with the file I just imported
+# lets start by adding a new column for bmi which is a function of height and weight
+csv$bmi <- csv$wt_kg / ( (csv$ht_cm / 100) ^ 2 )
 

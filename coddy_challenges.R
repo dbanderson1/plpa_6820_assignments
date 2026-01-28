@@ -1,4 +1,4 @@
-# Operators Part 1 Challenge
+#### Operators Part 1 Challenge ####
 # Given variables
 student_score <- 78
 passing_score <- 60
@@ -25,7 +25,7 @@ print(above_average)
 print(not_failing)
 print(needs_improvement)
 
-#Operators Part 2 Challenge
+#### Operators Part 2 Challenge ####
 # Given variables
 age <- 17
 has_permission <- TRUE

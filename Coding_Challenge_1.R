@@ -83,9 +83,8 @@ subset(zdf, zsquared > 10 & zsquared < 100)
 zdf[26,]
 subset(zdf, row(zdf) == 26) #technically you can do this but you shouldn't because subset is supposed to used on logical
   #	Subset the zdf dataframe to only include the values in the column zsquared in the 180th row.
-zdf[180,]
-subset(zdf, row(zdf) == 180) 
-  # note: we only have 100 rows so the above outputs NA NA NA NA
+zdf[180, "zsquared"]
+  # note: we only have 100 rows so the above outputs NA
 
 ## 5.	3 pts. Download the Tips.csv file from Canvas. Use the read.csv() function to read the data into R using a relative file path  and so that the missing values are properly coded. **Note the missing values are reported in the data as a period (i.e., “.”). How do you know the data were read correctly? 
 csv <- read.csv("corr.csv", na.strings = ".")

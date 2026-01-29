@@ -77,12 +77,17 @@ colnames(zdf) <- c("zvec", "zlogic")
 zdf$zsquared <- zdf$zvec ^ 2
   # Subset the dataframe with and without the subset() function to only include values of zsquared greater than 10 and less than 100
 zdf$zsquared[zdf$zsquared > 10 & zdf$zsquared < 100]
+subset(zdf, zsquared > 10 & zsquared < 100)
   #	Subset the zdf dataframe to only include the values on row 26
 zdf[26,]
+subset(zdf, row(zdf) == 26) #technically you can do this but you shouldn't because subset is supposed to used on logical
   #	Subset the zdf dataframe to only include the values in the column zsquared in the 180th row.
 zdf[180,]
+subset(zdf, row(zdf) == 180) 
   # note: we only have 100 rows so the above outputs NA NA NA NA
 
 ## 5.	3 pts. Download the Tips.csv file from Canvas. Use the read.csv() function to read the data into R using a relative file path  and so that the missing values are properly coded. **Note the missing values are reported in the data as a period (i.e., “.”). How do you know the data were read correctly? 
-  
-  6.	2 pts. Annotate your code, commit the changes and push it to your GitHub repository you created last class
+csv <- read.csv("corr.csv", na.strings = ".")
+csv
+  # you know that it is read properly because you can double click the data frame in the environment and see the missing data labeled as "NA" or you can type the dataframe name to display "csv"
+## 6.	2 pts. Annotate your code, commit the changes and push it to your GitHub repository you created last class

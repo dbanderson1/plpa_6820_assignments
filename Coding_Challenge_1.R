@@ -41,6 +41,7 @@ getwd()
   # Absolute paths are unambiguous but are often system-specific
   
 ## 2. 2 pts. Explain the steps to start a new R project connected to a GitHub repository.
+  # a:
   # 1. create your new repository on github
   # 2. then you click file -> new project
   # 3. then click version control -> git -> enter your repository url

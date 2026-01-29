@@ -92,3 +92,5 @@ csv <- read.csv("corr.csv", na.strings = ".")
 csv
   # you know that it is read properly because you can double click the data frame in the environment and see the missing data labeled as "NA" or you can type the dataframe name to display "csv"
 ## 6.	2 pts. Annotate your code, commit the changes and push it to your GitHub repository you created last class
+
+

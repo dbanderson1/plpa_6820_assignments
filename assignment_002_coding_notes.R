@@ -34,5 +34,40 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
 # whatever is plotted first is plotted are on top
 
+## Now Lets Load File 
+
+bull.richness <- read.csv("Bull_richness.csv", na.strings = ".")
+
+ggplot(bull.richness, aes(x = GrowthStage, y = richness)) +
+  geom_boxplot() +
+  geom_point(position = position_jitterdodge())
   
 
+## now lets compare by fungicide using color = fungicide
+
+ggplot(bull.richness, aes(x = GrowthStage, y = richness, fill = Fungicide)) +
+  geom_point(position = position_jitterdodge()) +
+  geom_boxplot() +
+  scale_color_manual(values = c("#E87722","#0C2340")) +
+  scale_fill_manual(values = c("#E87722", "#0C2340"))
+
+
+# bars with SE error bars
+ggplot(bull.richness, aes(x = GrowthStage, y = richness, fill = Fungicide)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar", position = "dodge") +
+  scale_fill_manual(values = c("#E87722", "#0C2340"))
+
+# bars with SE error bars
+ggplot(bull.richness, aes(x = GrowthStage, y = richness, group = Fungicide, color = Fungicide)) +
+  stat_summary(fun = mean, geom = "line") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar") +
+  scale_color_manual(values = c("#E87722", "#0C2340"))
+
+# Faceting
+ggplot(bull.richness, aes(x = GrowthStage, y = richness, group = Fungicide, color = Fungicide)) +
+  stat_summary(fun = mean, geom = "line") +
+  stat_summary(fun.data = mean_cl_normal, geom = "errorbar") +
+  scale_color_manual(values = c("#E87722", "#0C2340")) + 
+  facet_wrap(~Treatment*Crop, scales = "free")
+  

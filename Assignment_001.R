@@ -141,7 +141,7 @@ mat2 <- matrix(data = c("Zach", "Jie", "Tom"), nrow = 3, ncol = 3)
 mat2
 
 mat1[1]
-mat1[2]
+mat2[3,2]
 mat1[3]
 mat1[4]
 # logical function using  

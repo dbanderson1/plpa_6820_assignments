@@ -1,4 +1,5 @@
 #### Learn the Basics of Plotting ####
+## Derek Anderson
 ## we will predominantly use ggplot() ##
 ## will cover basic things like plotting, layering, changing appearance, faceting, etc. ##
 

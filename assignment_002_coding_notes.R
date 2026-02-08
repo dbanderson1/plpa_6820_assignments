@@ -3,7 +3,7 @@
 ## we will predominantly use ggplot() ##
 ## will cover basic things like plotting, layering, changing appearance, faceting, etc. ##
 
-#### Step 1 - Intsall and Load ggplot2 ####
+#### Step 1 - Install and Load ggplot2 ####
 # install.packages("ggplot2") - you don't need this because ggplot2 is in tidyverse
 install.packages("tidyverse")
 # library(ggplot2) - you don't need this because ggplot2 is in tidyverse

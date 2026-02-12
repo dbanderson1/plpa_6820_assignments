@@ -6,9 +6,7 @@ install.packages("tidyverse")
 library(tidyverse)
 
 # second, load the data
-don_csv <- read.csv("DON_data.csv", na.strings = "na")
-getwd()
-file.info("DON_data.csv")
+mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
 
 ### 1.	5 pts. Explain the following concepts about ggplot 
 ##a.	What three elements do you need to produce a ggplot?
@@ -51,14 +49,70 @@ ggplot(data, aes(x = height, y = weight, color = sex, shape = group)) +
   
 
 ### 2.	4 pts. Make a boxplot using ggplot with DON as the y variable, treatment as the x variable, and color mapped to the wheat cultivar. Change the y label to “DON (ppm)” and make the x label blank.
-
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, color = Cultivar)) +
+  geom_boxplot() +
+  ylab("DON (ppm)") +
+  xlab("")
 
 ### 3.	4 pts. Now convert this data into a bar chart with standard-error error bars using the stat_summary() command. (hint: use position = dodge)
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  ylab("DON (ppm)") +
+  xlab("")
 
 ### 4.	3 pts. Add points to the foreground of the boxplot and bar chart you made in questions 2 & 3 that show the distribution of points. Set the shape = 21 and the outline color black (hint: use jitter_dodge). 
+## boxplot
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  geom_boxplot(position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black") +
+  ylab("DON (ppm)") +
+  xlab("")
+
+## bar chart
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black") +
+  ylab("DON (ppm)") +
+  xlab("")
 
 ### 5.	2 pts. Add a facet to the plots based on cultivar.
+## boxplot
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  geom_boxplot(position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black") +
+  facet_wrap(~ Cultivar) +
+  ylab("DON (ppm)") +
+  xlab("")
 
-### 6.	3 pts. Add transparency to the points so you can still see the boxplot or bar in the background. 
+## bar chart
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black") +
+  facet_wrap(~ Cultivar) +
+  ylab("DON (ppm)") +
+  xlab("")
+# accomplished using facet_wrap()
+
+### 6.	3 pts. Add transparency to the points so you can still see the boxplot or bar in the background.
+## boxplot
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  geom_boxplot(position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black", alpha = 0.5) +
+  facet_wrap(~ Cultivar) +
+  ylab("DON (ppm)") +
+  xlab("")
+
+## bar chart
+ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
+  stat_summary(fun = mean, geom = "bar", position = "dodge") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", position = "dodge") +
+  geom_point(position = position_jitterdodge(), shape = 21, color = "black", alpha = 0.5) +
+  facet_wrap(~ Cultivar) +
+  ylab("DON (ppm)") +
+  xlab("")
+# I did this by adding alpha to the geom point
 
 ### 7.	4 pts. Annotate your code and push it to github. 

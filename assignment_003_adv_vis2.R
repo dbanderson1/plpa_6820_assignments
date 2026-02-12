@@ -12,7 +12,7 @@
 install.packages("tidyverse")
 # library(ggplot2) - you don't need this because ggplot2 is in tidyverse
 library(tidyverse)
-# this timei we will also add ggpubr which will allow us to integrate some stats into our figures
+# this time we will also add ggpubr which will allow us to integrate some stats into our figures
 install.packages("ggpubr")
 library(ggpubr)
 # we will add ggrepel to label points as well. it will also help with figure design and consistency.

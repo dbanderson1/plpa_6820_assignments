@@ -48,8 +48,9 @@ treatment.DON <- ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultiv
   facet_wrap(~ Cultivar) +
   ylab("DON (ppm)") +
   xlab("") +
-  scale_color_manual(values = cbbPalette) +
-  theme_classic()
+  theme_classic() +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) 
+  
 
 treatment.DON
 
@@ -61,7 +62,7 @@ treatment.X15ADON <- ggplot(mycotoxin_csv, aes(x = Treatment, y = X15ADON, fill 
   facet_wrap(~ Cultivar) +
   ylab("X15ADON (ppm)") +
   xlab("") +
-  scale_color_manual(values = cbbPalette) +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
   theme_classic() 
 
 treatment.X15ADON
@@ -74,7 +75,7 @@ treatment.massperseed_mg <- ggplot(mycotoxin_csv, aes(x = Treatment, y = Massper
   facet_wrap(~ Cultivar) +
   ylab("Mass per Seed (mg)") +
   xlab("") +
-  scale_color_manual(values = cbbPalette) +
+  scale_fill_manual(values = c("#E69F00", "#56B4E9")) +
   theme_classic() 
 
 treatment.massperseed_mg
@@ -95,3 +96,4 @@ figure1 <- ggarrange(
 figure1
 
 # 5.	5pts. Use geom_pwc() to add t.test pairwise comparisons to the three plots made above. Save each plot as a new R object, and combine them again with ggarange as you did in question 4. Your final plot should look something like this. 
+# - complete

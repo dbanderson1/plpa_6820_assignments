@@ -1,6 +1,7 @@
 #### Coding Challenge 2 ####
 # student: Derek Anderson
 # date: 2025-02-11
+# location: https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_2.R
 # first, install ggplot2, which is in tidyverse
 install.packages("tidyverse")
 library(tidyverse)
@@ -116,3 +117,4 @@ ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
 # I did this by adding alpha to the geom point
 
 ### 7.	4 pts. Annotate your code and push it to github. 
+# https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_2.R

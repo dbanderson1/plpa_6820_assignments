@@ -5,6 +5,14 @@
 # first, install ggplot2, which is in tidyverse
 install.packages("tidyverse")
 library(tidyverse)
+# this time we will also add ggpubr which will allow us to integrate some stats into our figures
+install.packages("ggpubr")
+library(ggpubr)
+# we will add ggrepel to label points as well. it will also help with figure design and consistency.
+# we should also strive for color blind pallets
+install.packages("ggrepel")
+library(ggrepel)
+
 
 # second, load the data
 mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
@@ -36,6 +44,7 @@ mycotoxin_csv$Treatment <- factor(mycotoxin_csv$Treatment, levels = c("NTC", "Fg
 treatment.DON <- ggplot(mycotoxin_csv, aes(x = Treatment, y = DON, fill = Cultivar)) +
   geom_boxplot(position = "dodge") +
   geom_point(position = position_jitterdodge(), shape = 21, color = "#000000", alpha = 0.6) +
+  geom_pwc(aes(group = Treatment), method = "t_test", label = "{p.adj.format}{p.adj.signif}") +
   facet_wrap(~ Cultivar) +
   ylab("DON (ppm)") +
   xlab("") +
@@ -48,6 +57,7 @@ treatment.DON
 treatment.X15ADON <- ggplot(mycotoxin_csv, aes(x = Treatment, y = X15ADON, fill = Cultivar)) +
   geom_boxplot(position = "dodge") +
   geom_point(position = position_jitterdodge(), shape = 21, color = "#000000", alpha = 0.6) +
+  geom_pwc(aes(group = Treatment), method = "t_test", label = "{p.adj.format}{p.adj.signif}") +
   facet_wrap(~ Cultivar) +
   ylab("X15ADON (ppm)") +
   xlab("") +
@@ -60,6 +70,7 @@ treatment.X15ADON
 treatment.massperseed_mg <- ggplot(mycotoxin_csv, aes(x = Treatment, y = MassperSeed_mg, fill = Cultivar)) +
   geom_boxplot(position = "dodge") +
   geom_point(position = position_jitterdodge(), shape = 21, color = "#000000", alpha = 0.6) +
+  geom_pwc(aes(group = Treatment), method = "t_test", label = "{p.adj.format}{p.adj.signif}") +
   facet_wrap(~ Cultivar) +
   ylab("Mass per Seed (mg)") +
   xlab("") +
@@ -69,6 +80,18 @@ treatment.massperseed_mg <- ggplot(mycotoxin_csv, aes(x = Treatment, y = Massper
 treatment.massperseed_mg
 
 ### 4.	5pts. Use ggarrange function to combine all three figures into one with three columns and one row. Set the labels for the subplots as A, B and C. Set the option common.legend = T within ggarage function. What did the common.legend option do?
-  a.	HINT: I didn’t specifically cover this in the tutorial, but you can go to the help page for the ggarange function to figure out what the common.legend option does and how to control it. 
+## a.	HINT: I didn’t specifically cover this in the tutorial, but you can go to the help page for the ggarange function to figure out what the common.legend option does and how to control it. 
+# Arrange multiple ggplot objects into a single figure
+figure1 <- ggarrange(
+  treatment.DON,  
+  treatment.massperseed_mg, 
+  treatment.X15ADON,  
+  labels = "auto",  
+  nrow = 1,  
+  ncol = 3,  
+  common.legend = TRUE
+)
 
-5.	5pts. Use geom_pwc() to add t.test pairwise comparisons to the three plots made above. Save each plot as a new R object, and combine them again with ggarange as you did in question 4. Your final plot should look something like this. 
+figure1
+
+# 5.	5pts. Use geom_pwc() to add t.test pairwise comparisons to the three plots made above. Save each plot as a new R object, and combine them again with ggarange as you did in question 4. Your final plot should look something like this. 

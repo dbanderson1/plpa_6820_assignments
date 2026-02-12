@@ -7,6 +7,8 @@ library(tidyverse)
 
 # second, load the data
 don_csv <- read.csv("DON_data.csv", na.strings = "na")
+getwd()
+file.info("DON_data.csv")
 
 ### 1.	5 pts. Explain the following concepts about ggplot 
 ##a.	What three elements do you need to produce a ggplot?
@@ -49,6 +51,7 @@ ggplot(data, aes(x = height, y = weight, color = sex, shape = group)) +
   
 
 ### 2.	4 pts. Make a boxplot using ggplot with DON as the y variable, treatment as the x variable, and color mapped to the wheat cultivar. Change the y label to “DON (ppm)” and make the x label blank.
+
 
 ### 3.	4 pts. Now convert this data into a bar chart with standard-error error bars using the stat_summary() command. (hint: use position = dodge)
 

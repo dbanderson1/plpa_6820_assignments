@@ -96,4 +96,6 @@ figure1 <- ggarrange(
 figure1
 
 # 5.	5pts. Use geom_pwc() to add t.test pairwise comparisons to the three plots made above. Save each plot as a new R object, and combine them again with ggarange as you did in question 4. Your final plot should look something like this. 
-# - complete
+# - complete, added to plots correct #4 to have levels and significance.
+# file location: https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_3.R
+#END

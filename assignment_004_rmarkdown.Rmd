@@ -3,33 +3,40 @@ title: "Assignment_004_rmarkdown"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
      
 ---
-
-```{r setup, include=FALSE}
+# Global Setup
+```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)
 library(ggplot2)
+library(knitr)
+library(markdown)
 ```
 
-This is an example of R Code
+# Example Code
 ```{r R code example, include=TRUE, echo=FALSE}
 # anything you write in here is r-code and will not be executed
 # include = false will run but not show in back ground
 # echo can show output
 summary(mtcars)
 ```
-This is an example of figures
+
+# Example Figure
 ```{r include figures}
 data("mtcars")
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point()
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "forestgreen", high = "black")
 ```
 
 

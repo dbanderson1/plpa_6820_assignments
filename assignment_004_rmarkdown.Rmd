@@ -12,6 +12,15 @@ output:
   pdf_document:
      
 ---
+# Global Setup
+```{r setup, include=TRUE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(knitr)
+library(markdown)
+```
+
+
 # R Markdown Formatting Options
 # First Level
 ## Second Level
@@ -28,7 +37,7 @@ __bold__
 >
 > --- Mark Twain
 
-### bullet-ed lists
+### bulleted lists
 
 - one item
 - one item
@@ -54,14 +63,18 @@ https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/
 ### Images
 
 #If you forgot the exclamation mark (!), it will become just a link
-![Included Figure 1](assignment_004_rmarkdown_files\figure-gfm\pressure-1.png)
+![Included Figure 1](assignment_004_rmarkdown_files\figure-gfm\include figures-1.png)
+![Pressure Figure](assignment_004_rmarkdown_files\figure-gfm\pressure-1.png)
 
-# Global Setup
-```{r setup, include=TRUE}
-knitr::opts_chunk$set(echo = TRUE)
-library(ggplot2)
-library(knitr)
-library(markdown)
+### Tables
+
+First Header  | Second Header
+------------- | -------------
+Content Cell  | Content Cell
+Content Cell  | Content Cell
+
+```{r}
+kable(head(mtcars, n = 5), digits = 3, format = "markdown")
 ```
 
 # Example Code
@@ -80,7 +93,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(aes(color = wt)) +
   xlab("Weight") + 
   ylab("Miles per gallon") +
-  scale_colour_gradient(low = "forestgreen", high = "black")
+  scale_colour_gradient(low = "green", high = "red")
 ```
 
 

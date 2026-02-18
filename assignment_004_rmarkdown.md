@@ -1,4 +1,80 @@
-This is an example of R Code
+# Global Setup
+
+``` r
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(knitr)
+library(markdown)
+```
+
+# R Markdown Formatting Options
+
+# First Level
+
+## Second Level
+
+### Third Level
+
+*italic* *italic* **bold** **bold**
+
+> “I thoroughly disapprove of duels. If a man should challenge me, I
+> would take him kindly and forgivingly by the hand and lead him to a
+> quiet place and kill him.”
+>
+> — Mark Twain
+
+### bulleted lists
+
+- one item
+- one item
+- one item
+  - one more item
+  - one more item
+  - one more item
+
+### numbered lists
+
+1.  the first item
+2.  the second item
+3.  the third item
+    - one unordered item
+    - one unordered item
+
+### Links
+
+<https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/>
+<https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/>
+[Noel
+Lab](https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/)
+
+### Images
+
+\#If you forgot the exclamation mark (!), it will become just a link
+![Included Figure
+1](assignment_004_rmarkdown_files\figure-gfm\include%20figures-1.png)
+![Pressure
+Figure](assignment_004_rmarkdown_files\figure-gfm\pressure-1.png)
+
+### Tables
+
+| First Header | Second Header |
+|--------------|---------------|
+| Content Cell | Content Cell  |
+| Content Cell | Content Cell  |
+
+``` r
+kable(head(mtcars, n = 5), digits = 3, format = "markdown")
+```
+
+|                   |  mpg | cyl | disp |  hp | drat |    wt |  qsec |  vs |  am | gear | carb |
+|:------------------|-----:|----:|-----:|----:|-----:|------:|------:|----:|----:|-----:|-----:|
+| Mazda RX4         | 21.0 |   6 |  160 | 110 | 3.90 | 2.620 | 16.46 |   0 |   1 |    4 |    4 |
+| Mazda RX4 Wag     | 21.0 |   6 |  160 | 110 | 3.90 | 2.875 | 17.02 |   0 |   1 |    4 |    4 |
+| Datsun 710        | 22.8 |   4 |  108 |  93 | 3.85 | 2.320 | 18.61 |   1 |   1 |    4 |    1 |
+| Hornet 4 Drive    | 21.4 |   6 |  258 | 110 | 3.08 | 3.215 | 19.44 |   1 |   0 |    3 |    1 |
+| Hornet Sportabout | 18.7 |   8 |  360 | 175 | 3.15 | 3.440 | 17.02 |   0 |   0 |    3 |    2 |
+
+# Example Code
 
     ##       mpg             cyl             disp             hp       
     ##  Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
@@ -22,12 +98,18 @@ This is an example of R Code
     ##  3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
     ##  Max.   :1.0000   Max.   :5.000   Max.   :8.000
 
-This is an example of figures
+# Example Figure
 
 ``` r
 data("mtcars")
 ggplot(mtcars, aes(x = wt, y = mpg)) +
-  geom_point()
+  geom_smooth(method = lm, se = FALSE) +
+  geom_point(aes(color = wt)) +
+  xlab("Weight") + 
+  ylab("Miles per gallon") +
+  scale_colour_gradient(low = "green", high = "red")
 ```
+
+    ## `geom_smooth()` using formula = 'y ~ x'
 
 ![](assignment_004_rmarkdown_files/figure-gfm/include%20figures-1.png)<!-- -->

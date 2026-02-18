@@ -2,7 +2,15 @@
 title: "assignment_004_rmarkdown"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
-output: html_document
+output:
+  md_document:
+    variant: gfm
+  html_document:
+    toc: true
+    toc_float: true
+  word_document:
+  pdf_document:
+     
 ---
 
 ```{r setup, include=FALSE}

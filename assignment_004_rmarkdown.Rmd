@@ -12,6 +12,50 @@ output:
   pdf_document:
      
 ---
+# R Markdown Formatting Options
+# First Level
+## Second Level
+### Third Level
+
+*italic*
+_italic_
+**bold**
+__bold__
+
+> "I thoroughly disapprove of duels. If a man should challenge me,
+  I would take him kindly and forgivingly by the hand and lead him
+  to a quiet place and kill him."
+>
+> --- Mark Twain
+
+### bullet-ed lists
+
+- one item
+- one item
+- one item
+    - one more item
+    - one more item
+    - one more item
+    
+### numbered lists
+
+1. the first item
+2. the second item
+3. the third item
+    - one unordered item
+    - one unordered item
+    
+### Links
+
+https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/
+<https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/>
+[Noel Lab](https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/)
+
+### Images
+
+#If you forgot the exclamation mark (!), it will become just a link
+![Included Figure 1](assignment_004_rmarkdown_files\figure-gfm\pressure-1.png)
+
 # Global Setup
 ```{r setup, include=TRUE}
 knitr::opts_chunk$set(echo = TRUE)

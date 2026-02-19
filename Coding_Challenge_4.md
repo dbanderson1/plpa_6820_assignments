@@ -138,11 +138,13 @@ called Coding Challenge 4. ☑
 ## Question 5
 
 6 pts. Now edit, commit, and push the README file for your repository
-and include the following elements. a. A clickable link in your README
-to your GitHub flavored .md file b. A file tree of your GitHub
-repository.
+and include the following elements.
+
+1.  A clickable link in your README to your GitHub flavored .md file. ☑
+
+2.  A file tree of your GitHub repository. ☑
 
 ## Question 6
 
 1 pt. Please turn in the file generated in question 3a to canvas with a
-clickable link to your GitHub repository within the document.
+clickable link to your GitHub repository within the document. ☑

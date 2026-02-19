@@ -37,5 +37,6 @@ and Rmarkdown.
 
 ### Clone this repository:
 
-\`\`\`bash git clone
-<https://github.com/dbanderson1/plpa_6820_assignments.git>
+``` bash
+git clone https://github.com/dbanderson1/plpa_6820_assignments.git
+```

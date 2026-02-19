@@ -18,15 +18,20 @@ Practice with reproducible workflows (R, Git, GitHub, R Markdown)
 
 ## File Tree
 
-plpa_6820_assignments/ ├── Assignment_001.R ├──
-assignment_002_coding_notes.R ├── assignment_003_adv_vis2.R ├──
-assignment_004_markdown.Rmd ├── assignment_004_markdown.md [download
-file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignment_004_rmarkdown.md)
-├── Coding_Challenge_1.R ├── Coding_Challenge_2.R ├──
-Coding_Challenge_3.R ├── Coding_Challenge_4.Rmd ├──
-Coding_Challenge_4.md
-[file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_4.md)
+``` bash
+plpa_6820_assignments/
+├── Assignment_001.R 
+├── assignment_002_coding_notes.R 
+├── assignment_003_adv_vis2.R
+├── assignment_004_markdown.Rmd 
+├── assignment_004_markdown.md [download file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignment_004_rmarkdown.md)
+├── Coding_Challenge_1.R
+├── Coding_Challenge_2.R
+├── Coding_Challenge_3.R
+├── Coding_Challenge_4.Rmd
+├── Coding_Challenge_4.md [file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_4.md)
 └── .gitignore
+```
 
 ## How to Use
 

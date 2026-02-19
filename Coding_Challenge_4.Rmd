@@ -3,11 +3,11 @@ title: "Coding Challenge 4"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
 ---
@@ -115,7 +115,7 @@ figure1
 
 6 pts. Knit your document together in the following formats:
 
-a.	Choose one format: .docx (word document), .pdf, or .html. Make sure it includes a table of contents &#x2611;
+a.	Choose one format: .docx (word document), .pdf, or **.html.** Make sure it includes a table of contents &#x2611;
 
 b.	GitHub flavored markdown (.md file). &#x2611;
 

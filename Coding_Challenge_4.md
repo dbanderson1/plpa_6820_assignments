@@ -125,8 +125,8 @@ figure1
 
 6 pts. Knit your document together in the following formats:
 
-1.  Choose one format: .docx (word document), .pdf, or .html. Make sure
-    it includes a table of contents ☑
+1.  Choose one format: .docx (word document), .pdf, or **.html.** Make
+    sure it includes a table of contents ☑
 
 2.  GitHub flavored markdown (.md file). ☑
 

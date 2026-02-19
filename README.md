@@ -23,12 +23,16 @@ Practice with reproducible workflows (R, Git, GitHub, R Markdown)
   appearance, faceting with ggplot
 - `assignment_003_adv_vis2.R` - advanced visualization using ggplot
 - `assignment_004_markdown.md` - learning rmarkdown
+  [file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignment_004_rmarkdown.md)
 - `Coding_Challenge_1.R` - coding challenge practicing techniques from
   assignment_001
 - `Coding_Challenge_2.R` - coding challenge practicing techniques from
   assignment_002
-- `Coding_Challenge_3.R` - coding challenge practiving techniques from
+- `Coding_Challenge_3.R` - coding challenge practicing techniques from
   assignment_003
+- `Coding_Challenge_4.R` - coding challenge practicing techniques from
+  assignment_004
+  [file](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_4.md)
 
 ## How to Use
 

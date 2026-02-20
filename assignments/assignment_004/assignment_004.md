@@ -110,4 +110,4 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](assignment_004_rmarkdown_files/figure-gfm/include%20figures-1.png)<!-- -->
+![](assignment_004_files/figure-gfm/include%20figures-1.png)<!-- -->

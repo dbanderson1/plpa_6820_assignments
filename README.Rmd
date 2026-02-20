@@ -32,19 +32,53 @@ Here you’ll find:
 - Practice with reproducible workflows (R, Git, GitHub, R Markdown)
 
 ## File Tree
+
+File tree generated using r code and fs():
+```{r generate file tree, eval=FALSE}
+fs::dir_tree()
+```
+
+
 ```{bash file tree, eval=FALSE}
-plpa_6820_assignments/
-├── Assignment_001.R 
-├── assignment_002_coding_notes.R 
-├── assignment_003_adv_vis2.R
-├── assignment_004_markdown.Rmd 
-├── assignment_004_markdown.md
-├── Coding_Challenge_1.R
-├── Coding_Challenge_2.R
-├── Coding_Challenge_3.R
-├── Coding_Challenge_4.Rmd
-├── Coding_Challenge_4.md
-└── .gitignore
+├── assignments
+│   ├── assignment_001
+│   │   ├── anthro.csv
+│   │   └── assignment_001.R
+│   ├── assignment_002
+│   │   ├── assignment_002.R
+│   │   └── Bull_richness.csv
+│   ├── assignment_003
+│   │   ├── assignment_003.R
+│   │   ├── BacterialAlpha.csv
+│   │   └── diff_abund.csv
+│   └── assignment_004
+│       ├── assignment_004.html
+│       ├── assignment_004.md
+│       ├── assignment_004.Rmd
+│       ├── assignment_004_files
+│       │   └── figure-gfm
+│       │       └── include figures-1.png
+│       ├── include figures-1.png
+│       └── pressure-1.png
+├── coding_challenges
+│   ├── coding_challenge_1
+│   │   ├── coding_challenge_1.R
+│   │   └── corr.csv
+│   ├── coding_challenge_2
+│   │   ├── coding_challenge_2.R
+│   │   └── MycotoxinData.csv
+│   ├── coding_challenge_3
+│   │   ├── coding_challenge_3.R
+│   │   └── MycotoxinData.csv
+│   └── coding_challenge_4
+│       ├── coding_challenge_4.html
+│       ├── coding_challenge_4.md
+│       ├── coding_challenge_4.Rmd
+│       └── MycotoxinData.csv
+├── plpa_6820_assignments.Rproj
+├── README.html
+├── README.md
+├── README.Rmd
 ```
 
 ## How to Use

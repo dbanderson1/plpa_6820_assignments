@@ -25,17 +25,14 @@ fs::dir_tree()
 ```
 
 ``` bash
+.
 ├── assignments
 │   ├── assignment_001
-│   │   ├── anthro.csv
 │   │   └── assignment_001.R
 │   ├── assignment_002
-│   │   ├── assignment_002.R
-│   │   └── Bull_richness.csv
+│   │   └── assignment_002.R
 │   ├── assignment_003
-│   │   ├── assignment_003.R
-│   │   ├── BacterialAlpha.csv
-│   │   └── diff_abund.csv
+│   │   └── assignment_003.R
 │   └── assignment_004
 │       ├── assignment_004.html
 │       ├── assignment_004.md
@@ -43,27 +40,33 @@ fs::dir_tree()
 │       ├── assignment_004_files
 │       │   └── figure-gfm
 │       │       └── include figures-1.png
-│       ├── include figures-1.png
 │       └── pressure-1.png
 ├── coding_challenges
 │   ├── coding_challenge_1
-│   │   ├── coding_challenge_1.R
-│   │   └── corr.csv
+│   │   └── coding_challenge_1.R
 │   ├── coding_challenge_2
-│   │   ├── coding_challenge_2.R
-│   │   └── MycotoxinData.csv
+│   │   └── coding_challenge_2.R
 │   ├── coding_challenge_3
-│   │   ├── coding_challenge_3.R
-│   │   └── MycotoxinData.csv
+│   │   └── coding_challenge_3.R
 │   └── coding_challenge_4
 │       ├── coding_challenge_4.html
 │       ├── coding_challenge_4.md
 │       ├── coding_challenge_4.Rmd
-│       └── MycotoxinData.csv
+│       └── coding_challenge_4_files
+│           └── figure-gfm
+│               └── Commbine and Display Plots-1.png
+├── data_files
+│   ├── anthro.csv
+│   ├── BacterialAlpha.csv
+│   ├── Bull_richness.csv
+│   ├── corr.csv
+│   ├── diff_abund.csv
+│   ├── MycotoxinData.csv
+│   └── TipsR.csv
 ├── plpa_6820_assignments.Rproj
 ├── README.html
 ├── README.md
-├── README.Rmd
+└── README.Rmd
 ```
 
 ## How to Use

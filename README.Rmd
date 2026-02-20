@@ -17,6 +17,7 @@ output:
 ```{r setup, include=FALSE}
 library(knitr)
 library(markdown)
+library(fs)
 ```
 
 ## Introduction

@@ -161,8 +161,7 @@ library(emmeans) #version 1.8.7
 install.packages("multcomp")
 library(multcomp)
 ## read the data, note: I could not find the .csv to follow these
-STAND <- read.csv("raw_data_valent2023_pythium_seedtreatment.csv", na.strings = "na")
-
+# STAND <- read.csv("raw_data_valent2023_pythium_seedtreatment.csv", na.strings = "na")
 
 #### OTHER - CONSIDER TIDYPLOTS ####
 # https://tidyplots.org/use-cases/

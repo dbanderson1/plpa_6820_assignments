@@ -13,8 +13,26 @@ and has many great resources for students learning R.
 
 ## Overview
 
-Here you’ll find: - R scripts for assignments - Example datasets -
-Practice with reproducible workflows (R, Git, GitHub, R Markdown)
+Here you’ll find:
+
+- R scripts for assignments
+- Example datasets
+- Practice with reproducible workflows (R, Git, GitHub, R Markdown)
+
+## File Links
+
+For ease of reference here are links to graded files:
+
+- assignments (a.k.a. ‘coding notes’)
+  -[assingment_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_001/assignment_001.R)
+  -[assingment_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_001/assignment_002.R)
+  -[assingment_3](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_001/assignment_003.R)
+  -[assingment_4](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_001/assignment_004.md)
+- coding challenges
+  -[coding_challenge_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_1/coding_challenge_1.R)
+  -[coding_challenge_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_2/coding_challenge_2.R)
+  -[coding_challenge_3](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_3/coding_challenge_3.R)
+  -[coding_challenge_4](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_4/coding_challenge_4.md)
 
 ## File Tree
 

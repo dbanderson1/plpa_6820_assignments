@@ -207,23 +207,23 @@ df
 #### Exercise 8 - Installing Packages ####
 # An R package is a group a functions called base. It is an open source language and different people can write and you can download a few.
 ## first you need to download the package. Then you need to load it.
-#tidyverse
-install.packages("tidyverse")
+# tidyverse
+# install.packages("tidyverse")
 library("tidyverse")
-#lme4
-install.packages("lme4")
+# lme4
+# install.packages("lme4")
 library(lme4)
 # purrr
-install.packages("purrr")
+# install.packages("purrr")
 library(purrr)
 #dplyr
-install.packages("dplyr")
+# install.packages("dplyr")
 library(dplyr)
-#ggplot2
-install.packages("ggplot2")
+# ggplot2
+# install.packages("ggplot2")
 library(ggplot2)
-#emmeans
-install.packages("emmeans")
+# emmeans
+# install.packages("emmeans")
 library(emmeans)
 
 #### Exercise 9 - Reading Data to R ####
@@ -232,7 +232,8 @@ library(emmeans)
 # coding missing data - there are many ways to do this
 # my file is located here - "C:\Users\derek\OneDrive\Documents\RStudio\plpa_6820_assignments\anthro.csv"
 # the above is an absolute file format, however if you place it directly into your repository you can use relative anthro.csv
-csv <- read.csv("anthro.csv", na.strings = "NA")
+csv <- read.csv("data_files/anthro.csv", na.strings = "NA")
+
 # you can also use the file choose function
 
 #### Exercise 10 - Messing Around ####

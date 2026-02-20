@@ -5,7 +5,7 @@
 
 #### Step 1 - Install and Load ggplot2 ####
 # install.packages("ggplot2") - you don't need this because ggplot2 is in tidyverse
-install.packages("tidyverse")
+# install.packages("tidyverse")
 # library(ggplot2) - you don't need this because ggplot2 is in tidyverse
 library(tidyverse)
 
@@ -37,7 +37,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
 ## Now Lets Load File 
 
-bull.richness <- read.csv("Bull_richness.csv", na.strings = ".")
+bull.richness <- read.csv("data_files/Bull_richness.csv", na.strings = ".")
 
 ggplot(bull.richness, aes(x = GrowthStage, y = richness)) +
   geom_boxplot() +

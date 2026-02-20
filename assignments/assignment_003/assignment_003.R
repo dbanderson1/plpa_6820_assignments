@@ -9,15 +9,15 @@
 
 #### Step 1 - Install and Load ggplot2 ####
 # install.packages("ggplot2") - you don't need this because ggplot2 is in tidyverse
-install.packages("tidyverse")
+# install.packages("tidyverse")
 # library(ggplot2) - you don't need this because ggplot2 is in tidyverse
 library(tidyverse)
 # this time we will also add ggpubr which will allow us to integrate some stats into our figures
-install.packages("ggpubr")
+# install.packages("ggpubr")
 library(ggpubr)
 # we will add ggrepel to label points as well. it will also help with figure design and consistency.
 # we should also strive for color blind pallets
-install.packages("ggrepel")
+# install.packages("ggrepel")
 library(ggrepel)
 
 #### Set up our palette ####
@@ -26,7 +26,7 @@ cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2"
 
 #### Load in our Data ####
 # first we load in factors
-sample.data.bac <- read.csv("BacterialAlpha.csv", na.strings = "na")
+sample.data.bac <- read.csv("data_files/BacterialAlpha.csv", na.strings = "na")
 # then we set time as a factor so it is not read as continuous variable
 sample.data.bac$Time_Point <- as.factor(sample.data.bac$Time_Point)
 # then we will do the same for crop type
@@ -117,7 +117,7 @@ water.imbibed.cor +
 
 #### Labeling Specific Points ####
 # read the data
-diff.abund <- read.csv("diff_abund.csv")
+diff.abund <- read.csv("data_files/diff_abund.csv")
 
 str(diff.abund)
 
@@ -154,11 +154,11 @@ volcano
 
 #### EXTRA - adding significance letters to represent pairwise comparisons ####
 ## install the packages
-install.packages("lme4")
+# install.packages("lme4")
 library(lme4)
-install.packages("emmeans")
+# install.packages("emmeans")
 library(emmeans) #version 1.8.7
-install.packages("multcomp")
+# install.packages("multcomp")
 library(multcomp)
 ## read the data, note: I could not find the .csv to follow these
 # STAND <- read.csv("raw_data_valent2023_pythium_seedtreatment.csv", na.strings = "na")

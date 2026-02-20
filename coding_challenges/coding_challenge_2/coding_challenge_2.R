@@ -3,11 +3,11 @@
 # date: 2025-02-11
 # location: https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_2.R
 # first, install ggplot2, which is in tidyverse
-install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 
 # second, load the data
-mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
+mycotoxin_csv <- read.csv("data_files/MycotoxinData.csv", na.strings = "na")
 
 ### 1.	5 pts. Explain the following concepts about ggplot 
 ##a.	What three elements do you need to produce a ggplot?

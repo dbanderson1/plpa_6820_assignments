@@ -3,11 +3,11 @@ title: "Coding Challenge 4"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
+  md_document:
+    variant: gfm
   html_document:
     toc: true
     toc_float: true
-  md_document:
-    variant: gfm
   word_document:
   pdf_document:
 ---
@@ -18,7 +18,10 @@ library(knitr)
 library(markdown)
 library(ggrepel)
 library(ggpubr)
+# set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
+# this sets the root file project to the main R project direcotry not location of current Rmd file
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 
 
@@ -52,7 +55,7 @@ a.	At the top of the document, make a clickable link to the manuscript where the
 b.	Read the data using a relative file path with na.strings option set to “na”. This means you need to put the Mycotoxin.csv file we have used for the past two weeks into your directory, which git tracks. &#x2611;
 
 ```{r Read Data}
-mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
+mycotoxin_csv <- read.csv("data_files/MycotoxinData.csv", na.strings = "na")
 ```
 
 c.	Make a separate code chunk for the figures plotting the DON data, 15ADON, and Seedmass, and one for the three combined using ggarrange. &#x2611;

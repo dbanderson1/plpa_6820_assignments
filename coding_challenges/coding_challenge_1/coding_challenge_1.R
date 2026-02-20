@@ -87,7 +87,7 @@ zdf[180, "zsquared"]
   # note: we only have 100 rows so the above outputs NA
 
 ## 5.	3 pts. Download the Tips.csv file from Canvas. Use the read.csv() function to read the data into R using a relative file path  and so that the missing values are properly coded. **Note the missing values are reported in the data as a period (i.e., “.”). How do you know the data were read correctly? 
-csv <- read.csv("corr.csv", na.strings = ".")
+csv <- read.csv("data_files/corr.csv", na.strings = ".")
 csv
   # you know that it is read properly because you can double click the data frame in the environment and see the missing data labeled as "NA" or you can type the dataframe name to display "csv"
 ## 6.	2 pts. Annotate your code, commit the changes and push it to your GitHub repository you created last class

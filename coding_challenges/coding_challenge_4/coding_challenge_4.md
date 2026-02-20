@@ -6,7 +6,10 @@ library(knitr)
 library(markdown)
 library(ggrepel)
 library(ggpubr)
+# set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
+# this sets the root file project to the main R project direcotry not location of current Rmd file
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 
 # Instructions
@@ -59,7 +62,7 @@ incorporate it into your R markdown file.
     used for the past two weeks into your directory, which git tracks. ☑
 
 ``` r
-mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
+mycotoxin_csv <- read.csv("data_files/MycotoxinData.csv", na.strings = "na")
 ```
 
 3.  Make a separate code chunk for the figures plotting the DON data,
@@ -119,7 +122,7 @@ figure1 <- ggarrange(
 figure1
 ```
 
-![](Coding_Challenge_4_files/figure-gfm/Commbine%20and%20Display%20Plots-1.png)<!-- -->
+![](coding_challenge_4_files/figure-gfm/Commbine%20and%20Display%20Plots-1.png)<!-- -->
 
 ## Question 3
 

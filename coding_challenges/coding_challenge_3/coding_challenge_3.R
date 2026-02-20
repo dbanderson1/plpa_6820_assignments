@@ -3,19 +3,19 @@
 # date: 2025-02-11
 # location: https://github.com/dbanderson1/plpa_6820_assignments/blob/main/Coding_Challenge_3.R
 # first, install ggplot2, which is in tidyverse
-install.packages("tidyverse")
+# install.packages("tidyverse")
 library(tidyverse)
 # this time we will also add ggpubr which will allow us to integrate some stats into our figures
-install.packages("ggpubr")
+# install.packages("ggpubr")
 library(ggpubr)
 # we will add ggrepel to label points as well. it will also help with figure design and consistency.
 # we should also strive for color blind pallets
-install.packages("ggrepel")
+# install.packages("ggrepel")
 library(ggrepel)
 
 
 # second, load the data
-mycotoxin_csv <- read.csv("MycotoxinData.csv", na.strings = "na")
+mycotoxin_csv <- read.csv("data_files/MycotoxinData.csv", na.strings = "na")
 
 # we can define our color blind palette as a vector #
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")

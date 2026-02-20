@@ -49,9 +49,10 @@ Lab](https://agriculture.auburn.edu/about/directory/faculty/zachary-noel/)
 
 ### Images
 
-\#If you forgot the exclamation mark (!), it will become just a link
-![Included Figure 1](include%20figures-1.png) ![Pressure
-Figure](pressure-1.png)
+<figure>
+<img src="pressure-1.png" alt="Pressure Figure" />
+<figcaption aria-hidden="true">Pressure Figure</figcaption>
+</figure>
 
 ### Tables
 

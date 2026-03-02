@@ -28,11 +28,14 @@ For ease of reference here are links to graded files:
   - [assingment_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_002/assignment_002.R)
   - [assingment_3](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_003/assignment_003.R)
   - [assingment_4](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_004/assignment_004.md)
+  - [assingment_4.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_004/assignment_004.md),
+    [assingment_4.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_004/assignment_004.Rmd)
 - coding challenges
   - [coding_challenge_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_1/coding_challenge_1.R)
   - [coding_challenge_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_2/coding_challenge_2.R)
   - [coding_challenge_3](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_3/coding_challenge_3.R)
-  - [coding_challenge_4](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_4/coding_challenge_4.md)
+  - [coding_challenge_4.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_4/coding_challenge_4.md),
+    [coding_challenge_4.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_4/coding_challenge_4.Rmd)
 
 ## File Tree
 
@@ -44,22 +47,30 @@ fs::dir_tree()
 
 ``` bash
 .
-├── assignments
+├── assignments             # Folder for assignments aka coding notes
 │   ├── assignment_001
 │   │   └── assignment_001.R
 │   ├── assignment_002
 │   │   └── assignment_002.R
 │   ├── assignment_003
 │   │   └── assignment_003.R
-│   └── assignment_004
-│       ├── assignment_004.html
-│       ├── assignment_004.md
-│       ├── assignment_004.Rmd
-│       ├── assignment_004_files
-│       │   └── figure-gfm
-│       │       └── include figures-1.png
-│       └── pressure-1.png
-├── coding_challenges
+│   ├── assignment_004
+│   │   ├── assignment_004.html
+│   │   ├── assignment_004.md
+│   │   ├── assignment_004.Rmd
+│   │   ├── assignment_004_files
+│   │   │   └── figure-gfm
+│   │   │       └── include figures-1.png
+│   │   └── pressure-1.png
+│   └── assignment_005
+│       ├── assignment_005.html
+│       ├── assignment_005.md
+│       ├── assignment_005.Rmd
+│       └── assignment_005_files
+│           └── figure-gfm
+│               ├── unnamed-chunk-11-1.png
+│               └── unnamed-chunk-16-1.png
+├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R
 │   ├── coding_challenge_2
@@ -73,7 +84,7 @@ fs::dir_tree()
 │       └── coding_challenge_4_files
 │           └── figure-gfm
 │               └── Commbine and Display Plots-1.png
-├── data_files
+├── data_files              # Folder with data files used by scripts
 │   ├── anthro.csv
 │   ├── BacterialAlpha.csv
 │   ├── Bull_richness.csv
@@ -81,9 +92,9 @@ fs::dir_tree()
 │   ├── diff_abund.csv
 │   ├── MycotoxinData.csv
 │   └── TipsR.csv
-├── plpa_6820_assignments.Rproj
+├── plpa_6820_assignments.Rproj # Top level R Project
 ├── README.html
-├── README.md
+├── README.md               # Top level directory README
 └── README.Rmd
 ```
 

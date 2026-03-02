@@ -317,9 +317,8 @@ The join group of functions are super useful. Have you ever tried to
 match up data by rows based on some criteria? It’s almost impossible to
 mess up over 10-15 rows of data.
 
-More info can be found here:
-<https://dplyr.tidyverse.org/reference/mutate-joins.htmlLinks> to an
-external site.
+More info can be found
+[here](https://dplyr.tidyverse.org/reference/mutate-joins.html).
 
 But we can easily do this with the joining functions. They include:
 
@@ -402,9 +401,8 @@ could simply load into R and do it.
 Pivoting is also useful for converting from wide to long format and back
 again. We can do this with pivot_longer() and pivot_wider()
 
-More info can be found here:
-<https://tidyr.tidyverse.org/reference/pivot_wider.htmlLinks> to an
-external site.
+More info can be found
+[here](https://tidyr.tidyverse.org/reference/pivot_wider.html).
 
 I will demonstrate pivot_wider() assuming that most data is already
 formatted as long data. Lets explore turning our data set into a wide

@@ -71,7 +71,7 @@ print(sd(z))
   #	Create a logical vector named zlog that is 'TRUE' for z values greater than 30 and 'FALSE' otherwise.
 zlog <- z > 30
   #	Make a dataframe with z and zlog as columns. Name the dataframe zdf
-zdf <- data.frame(z = z, zlog = zlog)
+zdf <- data.frame(z = z, zlog = log(z))
   # Change the column names in your new dataframe to equal “zvec” and “zlogic”
 colnames(zdf) <- c("zvec", "zlogic")
   #Make a new column in your dataframe equal to zvec squared (i.e., z2). Call the new column zsquared. 

@@ -8,6 +8,7 @@ library(tidyverse)
 
 # second, load the data
 mycotoxin_csv <- read.csv("data_files/MycotoxinData.csv", na.strings = "na")
+data <- data.frame(x = c(1:100), y = c(200:299))
 
 ### 1.	5 pts. Explain the following concepts about ggplot 
 ##a.	What three elements do you need to produce a ggplot?

@@ -105,11 +105,29 @@ head(alpha_even)
     and standard error for the even variable within each group.
 4.  Name the resulting dataframe alpha_average
 
-<!-- -->
+``` r
+alpha_average <- alpha_even %>%
+  group_by(Crop, Time_Point) %>%
+  summarise(
+    count = n(),
+    mean_evenness = mean(pielou_evenness, na.rm = TRUE),
+    sd_evenness = sd(pielou_evenness, na.rm = TRUE),
+    se_evenness = sd_evenness / sqrt(count)
+  )
+```
 
-5.  4.  Pts. Calculate the difference between the soybean column, the
-        soil column, and the difference between the cotton column and
-        the soil column
+    ## `summarise()` has regrouped the output.
+    ## ℹ Summaries were computed grouped by Crop and Time_Point.
+    ## ℹ Output is grouped by Crop.
+    ## ℹ Use `summarise(.groups = "drop_last")` to silence this message.
+    ## ℹ Use `summarise(.by = c(Crop, Time_Point))` for per-operation grouping
+    ##   (`?dplyr::dplyr_by`) instead.
+
+# 5. Calculate Differences
+
+4.  Pts. Calculate the difference between the soybean column, the soil
+    column, and the difference between the cotton column and the soil
+    column.
 
 <!-- -->
 
@@ -124,11 +142,25 @@ head(alpha_even)
     Cotton, and Soil and Soybean, respectively.
 5.  Name the resulting dataframe alpha_average2
 
-<!-- -->
+``` r
+alpha_average2 <- alpha_average %>%
+  # b) Select relevant columns
+  select(Time_Point, Crop, mean_evenness) %>%
+  # c) Reshape long -> wide (one column per Crop)
+  pivot_wider(
+    names_from = Crop,
+    values_from = mean_evenness
+  ) %>%
+  # d) Calculate differences (Soil - Cotton, Soil - Soybean)
+  mutate(
+    diff.cotton.even  = Soil - Cotton,
+    diff.soybean.even = Soil - Soybean
+  )
+```
 
-6.  4 pts. Connecting it to plots
+# 6. Plots
 
-<!-- -->
+4 pts. Plot the newly created dataframe using the pipe.
 
 1.  Start with the alpha_average2 dataframe
 2.  Select relevant columns: select the columns Time_Point,
@@ -136,19 +168,32 @@ head(alpha_even)
 3.  Reshape the data: Use the pivot_longer function to transform the
     data from wide to long format, creating a new column named diff that
     contains the values from diff.cotton.even and diff.soybean.even.
-4.  This might be challenging, so I’ll give you a break. The code is
-    below.
-
-pivot_longer(c(diff.cotton.even, diff.soybean.even), names_to = “diff”)
-
 4.  Create the plot: Use ggplot and geom_line() with ‘Time_Point’ on the
     x-axis, the column ‘values’ on the y-axis, and different colors for
     each ‘diff’ category. The column named ‘values’ come from the
     pivot_longer. The resulting plot should look like the one to the
     right.
 
-<!-- -->
+``` r
+  # a) start with alpha_average2 dataframe
+alpha_average2 %>%
+  # b) Select relevant columns
+  select(Time_Point, diff.cotton.even, diff.soybean.even) %>%
+  # c) Reshape wide -> long
+  pivot_longer(
+    c(diff.cotton.even, diff.soybean.even),
+    names_to = "diff",
+    values_to = "values"
+  ) %>%
+  # d) Plot
+  ggplot(aes(x = Time_Point, y = values, color = diff, group = diff)) +
+  geom_line()
+```
 
-7.  2 pts. Commit and push a gfm .md file to GitHub inside a directory
-    called Coding Challenge 5. Provide me a link to your github written
-    as a clickable link in your .pdf or .docx
+![](coding_challenge_5_files/figure-gfm/Plot-1.png)<!-- -->
+
+# 7. Publish
+
+2 pts. Commit and push a gfm .md file to GitHub inside a directory
+called Coding Challenge 5. Provide me a link to your github written as a
+clickable link in your .pdf or .docx or .html.

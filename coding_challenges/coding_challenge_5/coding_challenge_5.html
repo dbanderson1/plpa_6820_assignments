@@ -1577,6 +1577,20 @@ grouped by crop over time.</li>
 and standard error for the even variable within each group.</li>
 <li>Name the resulting dataframe alpha_average</li>
 </ol>
+<pre class="r"><code>alpha_average &lt;- alpha_even %&gt;%
+  group_by(Crop, Time_Point) %&gt;%
+  summarise(
+    count = n(),
+    mean_evenness = mean(pielou_evenness, na.rm = TRUE),
+    sd_evenness = sd(pielou_evenness, na.rm = TRUE),
+    se_evenness = sd_evenness / sqrt(count)
+  )</code></pre>
+<pre><code>## `summarise()` has regrouped the output.
+## ℹ Summaries were computed grouped by Crop and Time_Point.
+## ℹ Output is grouped by Crop.
+## ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+## ℹ Use `summarise(.by = c(Crop, Time_Point))` for per-operation grouping
+##   (`?dplyr::dplyr_by`) instead.</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li><ol start="4" style="list-style-type: decimal">
 <li>Pts. Calculate the difference between the soybean column, the soil

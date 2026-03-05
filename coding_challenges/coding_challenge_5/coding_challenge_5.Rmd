@@ -59,6 +59,18 @@ a.	Start with the alpha_even dataframe
 b.	Group the data: group the data by Crop and Time_Point.
 c.	Summarize the data: Calculate the mean, count, standard deviation, and standard error for the even variable within each group.
 d.	Name the resulting dataframe alpha_average
+
+```{r}
+alpha_average <- alpha_even %>%
+  group_by(Crop, Time_Point) %>%
+  summarise(
+    count = n(),
+    mean_evenness = mean(pielou_evenness, na.rm = TRUE),
+    sd_evenness = sd(pielou_evenness, na.rm = TRUE),
+    se_evenness = sd_evenness / sqrt(count)
+  )
+```
+
 5.	4. Pts. Calculate the difference between the soybean column, the soil column, and the difference between the cotton column and the soil column
 a.	Start with the alpha_average dataframe
 b.	Select relevant columns: select the columns Time_Point, Crop, and mean.even.

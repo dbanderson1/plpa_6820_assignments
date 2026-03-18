@@ -1,0 +1,106 @@
+---
+title: "Assignment_006_rmarkdown - Iterations and Functions"
+author: "Derek Anderson"
+date: "`r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+  html_document:
+    toc: true
+    toc_float: true
+  word_document:
+  pdf_document:
+     
+---
+# Concepts Covered in the Section
+
+The data this analysis performs is published [here](https://apsjournals.apsnet.org/doi/full/10.1094/PDIS-06-17-0873-SRLinks).
+
+These are not exactly straightforward to learn and can be challenging, but once mastered, you will start seeing data differently, and you will start to realize that thousands, hundreds of thousands, or even millions of data points are manageable.
+
+You will need the following packages for this exercise.
+
+# Global Setup
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(markdown)
+library(drc)
+# set the default global option for displaying code chunks
+knitr::opts_chunk$set(echo = TRUE)
+# this sets the root file project to the main R project direcotry not location of current Rmd file
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+```
+
+# Functions 
+
+Functions are like those written into packages. They are useful when you need to perform the same code on different data and you want to avoid copy and paste errors.
+
+If you find yourself coding and you keep copy and pasting certain code. Maybe its time to convert it to a function.
+
+Functions are useful to simplify your code, and make your data management as reproducible as possible.
+
+Lets show an example
+
+Say I wanted to make a function to convert Fahrenheit to Celsius
+
+I could write it in R like this, where degree_f = our degrees in Fahrenheit I want to convert
+```{r}
+degree_f <- c(32, 100, 70, 0)
+degree_c <- (5*(degree_f - 32)/9)
+degree_c
+```
+But now we want to input a different number, say 80ºF and we have to copy and paste the formula below or overwrite what we just wrote. This is not very reproducible because it is susceptible to copy and paste errors, and not remembering what we did if we overwrite previous code.
+
+We can solve this by converting it to a function.
+
+```{r}
+F_to_C <- function(fahrenheit_temp){
+  celsius <- (5*(fahrenheit_temp - 32)/9)
+  paste0(celsius, "° C")
+}
+# note I used paste0 to convert to character with degrees listed but if you want to do math you could simply return the number
+
+# these do the same thing
+F_to_C(80)
+```
+# Anatomy of a function
+
+We first start with naming the function something using the backwards arrow. Then we type “function()”.
+
+After opening a new function we type the curly brackets. We will type the code we want to perform within the curly brackets.
+
+Inside the parentheses after function is where we put our variables separated by commas.
+
+```{r eval=FALSE}
+sample_function <- function(variable){
+  #code goes here 
+  return(output)
+}
+```
+
+1. So, in the example above we want to put the variable inside the parentheses. This is what we are going to input into the function.
+2. Then we input what we want to do to the variable inside the brackets
+3. Then all functions need a return() - this is what we want the output of the function to be
+
+Make sense?
+
+# Challenge - C to F
+
+write a function to convert celsius to fahrenheiht using the conversion F = C x (9/5)+32
+
+```{r}
+C_to_F <- function(celsius_temp){
+  fahrenheit <- celsius_temp * (9/5) + 32
+  paste0(fahrenheit, "° F")
+}
+
+# Test
+F_to_C(32)
+C_to_F(0)
+C_to_F(40)
+F_to_C(40)
+```
+# Interations
+

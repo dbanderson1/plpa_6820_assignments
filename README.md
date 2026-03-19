@@ -43,7 +43,8 @@ For ease of reference here are links to graded files:
     [coding_challenge_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.Rmd)
   - [coding_challenge_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.md),
     [coding_challenge_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.Rmd)
-    \## File Tree
+
+## File Tree
 
 File tree generated using r code and fs():
 

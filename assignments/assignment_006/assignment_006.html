@@ -11,7 +11,7 @@
 
 <meta name="author" content="Derek Anderson" />
 
-<meta name="date" content="2026-03-18" />
+<meta name="date" content="2026-03-19" />
 
 <title>Assignment_006_rmarkdown - Iterations and Functions</title>
 
@@ -1482,7 +1482,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Assignment_006_rmarkdown - Iterations and
 Functions</h1>
 <h4 class="author">Derek Anderson</h4>
-<h4 class="date">2026-03-18</h4>
+<h4 class="date">2026-03-19</h4>
 
 </div>
 
@@ -1498,11 +1498,11 @@ even millions of data points are manageable.</p>
 </div>
 <div id="global-setup" class="section level1">
 <h1>Global Setup</h1>
-<pre class="r"><code>suppressWarnings(library(tidyverse))
-suppressWarnings(library(ggplot2))
-suppressWarnings(library(knitr))
-suppressWarnings(library(markdown))
-suppressWarnings(library(drc))
+<pre class="r"><code>library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(markdown)
+library(drc)
 # set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project direcotry not location of current Rmd file
@@ -1582,8 +1582,1239 @@ F_to_C(32)</code></pre>
 <pre class="r"><code>F_to_C(40)</code></pre>
 <pre><code>## [1] &quot;4.44444444444444° C&quot;</code></pre>
 </div>
-<div id="interations" class="section level1">
-<h1>Interations</h1>
+<div id="iterations" class="section level1">
+<h1>Iterations</h1>
+<p>Iterations are something you do over and over again. They are useful
+for multiple reasons. In terms of reproducibility, it again, helps
+reduce copy and paste errors for something we would like to do over and
+over again. It can also helpful for sanity checks through data
+simulation.</p>
+<p>In this example we will cover iterations in the following
+functions</p>
+<ol style="list-style-type: decimal">
+<li>rep()</li>
+<li>seq() &amp; seq_along()</li>
+<li>for loops map() *nested map()</li>
+</ol>
+<div id="the-rep-function" class="section level2">
+<h2>the rep() function</h2>
+<pre class="r"><code>rep(&quot;A&quot;, 3) # repeats A three times </code></pre>
+<pre><code>## [1] &quot;A&quot; &quot;A&quot; &quot;A&quot;</code></pre>
+<pre class="r"><code>rep(c(&quot;A&quot;, &quot;B&quot;), 5) # repeats A and B, times </code></pre>
+<pre><code>##  [1] &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;B&quot; &quot;A&quot; &quot;B&quot;</code></pre>
+<pre class="r"><code>rep(c(1,2,3,4), times = 4) # repeats 1,2,3,4, 4 times </code></pre>
+<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4</code></pre>
+<pre class="r"><code>rep(c(1,2,5,2), times = 4, each = 4) # repeats 1 four times, 2 four times, 5 four times, and 2 four times. </code></pre>
+<pre><code>##  [1] 1 1 1 1 2 2 2 2 5 5 5 5 2 2 2 2 1 1 1 1 2 2 2 2 5 5 5 5 2 2 2 2 1 1 1 1 2 2
+## [39] 2 2 5 5 5 5 2 2 2 2 1 1 1 1 2 2 2 2 5 5 5 5 2 2 2 2</code></pre>
+</div>
+<div id="the-seq-function" class="section level2">
+<h2>The seq() function</h2>
+<p>This function allows you to write sequences of numbers easily</p>
+<p>The seq_along() function allows you to generate a sequence of numbers
+based on non-integer values. This will become very useful when we want
+to loop over elements within a dataframe.</p>
+<pre class="r"><code>seq(from = 1, to = 7) # sequence of numbers 1 to 7</code></pre>
+<pre><code>## [1] 1 2 3 4 5 6 7</code></pre>
+<pre class="r"><code>seq(from = 0, to = 10, by = 2) # sequence of numbers from 0 to 10 by 2s </code></pre>
+<pre><code>## [1]  0  2  4  6  8 10</code></pre>
+<pre class="r"><code># combined seq() and rep()
+rep(seq(from = 0, to = 10, by = 2), times = 3, each = 2)</code></pre>
+<pre><code>##  [1]  0  0  2  2  4  4  6  6  8  8 10 10  0  0  2  2  4  4  6  6  8  8 10 10  0
+## [26]  0  2  2  4  4  6  6  8  8 10 10</code></pre>
+<pre class="r"><code>seq_along(LETTERS[1:5]) # will return 1,2,3,4,5 not the actual letters. </code></pre>
+<pre><code>## [1] 1 2 3 4 5</code></pre>
+</div>
+</div>
+<div id="the-for-loop" class="section level1">
+<h1>The for loop</h1>
+<p>The for loop is classic coding. Almost every coding language has a
+version of a for loop.</p>
+<p>Lets see a very basic example of how a for loop works</p>
+<pre class="r"><code>for (i in 1:10) {
+print(i*2)  
+}</code></pre>
+<pre><code>## [1] 2
+## [1] 4
+## [1] 6
+## [1] 8
+## [1] 10
+## [1] 12
+## [1] 14
+## [1] 16
+## [1] 18
+## [1] 20</code></pre>
+<p>lets see a more complicated example where we can also use our
+functions in a loop for example.</p>
+<pre class="r"><code>for (i in -30:100){
+  result &lt;- F_to_C(i)
+  print(result)
+}</code></pre>
+<pre><code>## [1] &quot;-34.4444444444444° C&quot;
+## [1] &quot;-33.8888888888889° C&quot;
+## [1] &quot;-33.3333333333333° C&quot;
+## [1] &quot;-32.7777777777778° C&quot;
+## [1] &quot;-32.2222222222222° C&quot;
+## [1] &quot;-31.6666666666667° C&quot;
+## [1] &quot;-31.1111111111111° C&quot;
+## [1] &quot;-30.5555555555556° C&quot;
+## [1] &quot;-30° C&quot;
+## [1] &quot;-29.4444444444444° C&quot;
+## [1] &quot;-28.8888888888889° C&quot;
+## [1] &quot;-28.3333333333333° C&quot;
+## [1] &quot;-27.7777777777778° C&quot;
+## [1] &quot;-27.2222222222222° C&quot;
+## [1] &quot;-26.6666666666667° C&quot;
+## [1] &quot;-26.1111111111111° C&quot;
+## [1] &quot;-25.5555555555556° C&quot;
+## [1] &quot;-25° C&quot;
+## [1] &quot;-24.4444444444444° C&quot;
+## [1] &quot;-23.8888888888889° C&quot;
+## [1] &quot;-23.3333333333333° C&quot;
+## [1] &quot;-22.7777777777778° C&quot;
+## [1] &quot;-22.2222222222222° C&quot;
+## [1] &quot;-21.6666666666667° C&quot;
+## [1] &quot;-21.1111111111111° C&quot;
+## [1] &quot;-20.5555555555556° C&quot;
+## [1] &quot;-20° C&quot;
+## [1] &quot;-19.4444444444444° C&quot;
+## [1] &quot;-18.8888888888889° C&quot;
+## [1] &quot;-18.3333333333333° C&quot;
+## [1] &quot;-17.7777777777778° C&quot;
+## [1] &quot;-17.2222222222222° C&quot;
+## [1] &quot;-16.6666666666667° C&quot;
+## [1] &quot;-16.1111111111111° C&quot;
+## [1] &quot;-15.5555555555556° C&quot;
+## [1] &quot;-15° C&quot;
+## [1] &quot;-14.4444444444444° C&quot;
+## [1] &quot;-13.8888888888889° C&quot;
+## [1] &quot;-13.3333333333333° C&quot;
+## [1] &quot;-12.7777777777778° C&quot;
+## [1] &quot;-12.2222222222222° C&quot;
+## [1] &quot;-11.6666666666667° C&quot;
+## [1] &quot;-11.1111111111111° C&quot;
+## [1] &quot;-10.5555555555556° C&quot;
+## [1] &quot;-10° C&quot;
+## [1] &quot;-9.44444444444444° C&quot;
+## [1] &quot;-8.88888888888889° C&quot;
+## [1] &quot;-8.33333333333333° C&quot;
+## [1] &quot;-7.77777777777778° C&quot;
+## [1] &quot;-7.22222222222222° C&quot;
+## [1] &quot;-6.66666666666667° C&quot;
+## [1] &quot;-6.11111111111111° C&quot;
+## [1] &quot;-5.55555555555556° C&quot;
+## [1] &quot;-5° C&quot;
+## [1] &quot;-4.44444444444444° C&quot;
+## [1] &quot;-3.88888888888889° C&quot;
+## [1] &quot;-3.33333333333333° C&quot;
+## [1] &quot;-2.77777777777778° C&quot;
+## [1] &quot;-2.22222222222222° C&quot;
+## [1] &quot;-1.66666666666667° C&quot;
+## [1] &quot;-1.11111111111111° C&quot;
+## [1] &quot;-0.555555555555556° C&quot;
+## [1] &quot;0° C&quot;
+## [1] &quot;0.555555555555556° C&quot;
+## [1] &quot;1.11111111111111° C&quot;
+## [1] &quot;1.66666666666667° C&quot;
+## [1] &quot;2.22222222222222° C&quot;
+## [1] &quot;2.77777777777778° C&quot;
+## [1] &quot;3.33333333333333° C&quot;
+## [1] &quot;3.88888888888889° C&quot;
+## [1] &quot;4.44444444444444° C&quot;
+## [1] &quot;5° C&quot;
+## [1] &quot;5.55555555555556° C&quot;
+## [1] &quot;6.11111111111111° C&quot;
+## [1] &quot;6.66666666666667° C&quot;
+## [1] &quot;7.22222222222222° C&quot;
+## [1] &quot;7.77777777777778° C&quot;
+## [1] &quot;8.33333333333333° C&quot;
+## [1] &quot;8.88888888888889° C&quot;
+## [1] &quot;9.44444444444444° C&quot;
+## [1] &quot;10° C&quot;
+## [1] &quot;10.5555555555556° C&quot;
+## [1] &quot;11.1111111111111° C&quot;
+## [1] &quot;11.6666666666667° C&quot;
+## [1] &quot;12.2222222222222° C&quot;
+## [1] &quot;12.7777777777778° C&quot;
+## [1] &quot;13.3333333333333° C&quot;
+## [1] &quot;13.8888888888889° C&quot;
+## [1] &quot;14.4444444444444° C&quot;
+## [1] &quot;15° C&quot;
+## [1] &quot;15.5555555555556° C&quot;
+## [1] &quot;16.1111111111111° C&quot;
+## [1] &quot;16.6666666666667° C&quot;
+## [1] &quot;17.2222222222222° C&quot;
+## [1] &quot;17.7777777777778° C&quot;
+## [1] &quot;18.3333333333333° C&quot;
+## [1] &quot;18.8888888888889° C&quot;
+## [1] &quot;19.4444444444444° C&quot;
+## [1] &quot;20° C&quot;
+## [1] &quot;20.5555555555556° C&quot;
+## [1] &quot;21.1111111111111° C&quot;
+## [1] &quot;21.6666666666667° C&quot;
+## [1] &quot;22.2222222222222° C&quot;
+## [1] &quot;22.7777777777778° C&quot;
+## [1] &quot;23.3333333333333° C&quot;
+## [1] &quot;23.8888888888889° C&quot;
+## [1] &quot;24.4444444444444° C&quot;
+## [1] &quot;25° C&quot;
+## [1] &quot;25.5555555555556° C&quot;
+## [1] &quot;26.1111111111111° C&quot;
+## [1] &quot;26.6666666666667° C&quot;
+## [1] &quot;27.2222222222222° C&quot;
+## [1] &quot;27.7777777777778° C&quot;
+## [1] &quot;28.3333333333333° C&quot;
+## [1] &quot;28.8888888888889° C&quot;
+## [1] &quot;29.4444444444444° C&quot;
+## [1] &quot;30° C&quot;
+## [1] &quot;30.5555555555556° C&quot;
+## [1] &quot;31.1111111111111° C&quot;
+## [1] &quot;31.6666666666667° C&quot;
+## [1] &quot;32.2222222222222° C&quot;
+## [1] &quot;32.7777777777778° C&quot;
+## [1] &quot;33.3333333333333° C&quot;
+## [1] &quot;33.8888888888889° C&quot;
+## [1] &quot;34.4444444444444° C&quot;
+## [1] &quot;35° C&quot;
+## [1] &quot;35.5555555555556° C&quot;
+## [1] &quot;36.1111111111111° C&quot;
+## [1] &quot;36.6666666666667° C&quot;
+## [1] &quot;37.2222222222222° C&quot;
+## [1] &quot;37.7777777777778° C&quot;</code></pre>
+<p>This was great, but this only printed to the console, and we cannot
+really do anything with those values. What if we wanted to do something
+with the result of the iteration?</p>
+<p>Steps:</p>
+<ol style="list-style-type: decimal">
+<li>Set a R object to NULL</li>
+<li>Set your for loop</li>
+<li>Save the result of your for loop into a dataframe each
+iteration</li>
+<li>append one row of the dataframe to the null object each iteration of
+the loop.</li>
+</ol>
+<pre class="r"><code>celcius.df &lt;- NULL 
+for (i in -30:100){   
+result_i &lt;- data.frame(F_to_C(i), i)   
+celcius.df &lt;- rbind.data.frame(celcius.df, result_i) 
+}</code></pre>
+</div>
+<div id="dose-response-challenge" class="section level1">
+<h1>Dose Response Challenge</h1>
+<p>Within this dataset is a list of isolates and fungicide sensitivity
+data.</p>
+<p>We want to find something called an EC50 or the concentration of a
+fungicide that reduces growth by 50% relative to the non-amended
+control.</p>
+<p>To do this we use a non-linear regression of the radial growth of a
+fungus against the log concentration of a fungicide, and find the
+half-maximal response as shown in the image below.</p>
+<div id="read-data" class="section level2">
+<h2>Read Data</h2>
+<pre class="r"><code>EC50.data &lt;- read.csv(&quot;data_files/EC50_all.csv&quot;)</code></pre>
+<p>We want to find something called an EC50 or the concentration of a
+fungicide that reduces growth by 50% relative to the non-amended
+control.</p>
+<p>To do this we use a non-linear regression of the radial growth of a
+fungus against the log concentration of a fungicide, and find the
+half-maximal response as shown in the image below.</p>
+<p>The exact details of the statistics are not super important for you
+to know, but just know that this example studies can include hundreds of
+individual isolates to model this EC50 value, and this can be very
+cumbersome if we had to write code for every isolate.</p>
+<p>We do this using non-linear modeling with the DRC package with a
+model called the LL.4 The specifics of the model are not that important.
+What is important is that in order to use this model we have to model
+each isolate individually and gather the EC50 data.</p>
+<p>An example is shown here where we do this on isolate ILSO_5-41c</p>
+<pre class="r"><code>isolate1 &lt;- drm(100 * EC50.data$relgrowth[EC50.data$is == &quot;ILSO_5-41c&quot;] ~ 
+        EC50.data$conc[EC50.data$is == &quot;ILSO_5-41c&quot;], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;)), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for &#39;summary of fit&#39;
+    summary.fit &lt;- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 &lt;- ED(isolate1, respLev = c(50), type = &quot;relative&quot;, 
+        interval = &quot;delta&quot;)[[1]]</code></pre>
+<pre><code>## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1070318  0.0055365 0.0957543 0.1183094</code></pre>
+<pre class="r"><code>    EC50</code></pre>
+<pre><code>## [1] 0.1070318</code></pre>
+<p>It would not be reproducible to copy and paste each isolate into the
+code above to run the model for every isolate. It would also not be very
+reproducible to copy and paste the code below since this is prone to
+errors.</p>
+</div>
+<div id="the-loop" class="section level2">
+<h2>The Loop</h2>
+<p>There are then two options: a loop that iterates over isolate names
+in a newer way using the function map()</p>
+<p>I will demonstrate how to do each option.</p>
+<div id="first-the-loop" class="section level3">
+<h3>First the loop</h3>
+<p>First, we need to create a vector to loop over containing the names
+of our isolates. We will call this ‘nm’ using the function ‘unique’.</p>
+<pre class="r"><code>nm &lt;- unique(EC50.data$is)</code></pre>
+<p>Then we can write a loop using the code above and input our list of
+isolates, ‘nm’ by using ‘seq_along’</p>
+<p>Then, whenever we want to input our isolate name, we will put
+nm[[i]].</p>
+<p>So, as the loop goes along the list of isolate names, it will input
+the name of the isolate, calculate EC50, and run the model and output
+EC50.</p>
+<pre class="r"><code># used eval=FALSE so we don&#39;t have huge printed results list of all 76 isolates
+
+for (i in seq_along(nm)) {
+  isolate1 &lt;- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;)), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for &#39;summary of fit&#39;
+    summary.fit &lt;- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 &lt;- ED(isolate1, respLev = c(50), type = &quot;relative&quot;, 
+        interval = &quot;delta&quot;)[[1]]
+    EC50
+}</code></pre>
+</div>
+<div id="second-loop" class="section level3">
+<h3>Second Loop</h3>
+<p>Awesome! we have all of our EC50 values very quickly.</p>
+<p>But this is still not super helpful because the output is not saved
+and we cant use it in a plot or something. So, we now need to save the
+output of a loop into a dataframe.</p>
+<p>The way we do this is to create the dataframe row by row in the
+loop.</p>
+<p>To do this we first need to creat a null dataframe and add to it each
+iteration.</p>
+<pre class="r"><code># used results=&#39;hide&#39;to hide results which are stored in dataframe
+EC50.ll4 &lt;- NULL # create a null object 
+for (i in seq_along(nm)) {
+  isolate1 &lt;- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;)), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for &#39;summary of fit&#39;
+    summary.fit &lt;- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 &lt;- ED(isolate1, respLev = c(50), type = &quot;relative&quot;, 
+        interval = &quot;delta&quot;)[[1]]
+    EC50
+    isolate.ec_i &lt;- data.frame(nm[[i]], EC50) # create a one row dataframe containing just the isolate name and the EC50
+    colnames(isolate.ec_i) &lt;- c(&quot;Isolate&quot;, &quot;EC50&quot;) # change the column names
+    
+    # Then we need to append our one row dataframe to our null dataframe we created before
+    # and save it as EC50.ll4. 
+    EC50.ll4 &lt;- rbind.data.frame(EC50.ll4, isolate.ec_i)
+}</code></pre>
+<p>Now we have a final dataset with EC50 data contained within EC50.ll4
+that was appended with each isolate upon each iteration. Something we
+can use in a graph for example for publication. Like this.</p>
+<pre class="r"><code>ggplot(EC50.ll4, aes(x = EC50)) + geom_histogram() + theme_classic()</code></pre>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
+<p><img role="img" aria-label src="data:image/png;base64,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" alt width="672" />
+## Using map with the tidyverse</p>
+<p>However, just like everything else in R, there are multiple ways to
+do the same thing.</p>
+<p>Lets demonstrate this example with the function map() and nested
+dataframes within the tidyr package.</p>
+<p>The concept is that loops are combersome and hard to read. So, the
+map() function was created and everything is contained within the same R
+object.</p>
+<p>Here is the example of how to do the same loop as above but with the
+map() function:</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is) %&gt;%
+  nest() %&gt;%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;))))) %&gt;%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = &quot;relative&quot;,
+                              interval = &quot;delta&quot;)[[1]])) %&gt;%
+  unnest(ec50)</code></pre>
+<pre><code>## Warning: There were 19 warnings in `mutate()`.
+## The first warning was:
+## ℹ In argument: `ll.4.mod = map(...)`.
+## ℹ In group 4: `is = &quot;C-MNSO2_2-10&quot;`.
+## Caused by warning in `log()`:
+## ! NaNs produced
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 18 remaining warnings.</code></pre>
+<pre><code>## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.106855   0.022010 0.062022 0.151687
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.177036   0.011915 0.152767 0.201305
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.234268   0.017095 0.199447 0.269088
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0172659  0.0012838 0.0146508 0.0198809
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.117014   0.012255 0.092052 0.141977
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.147113   0.008233 0.130343 0.163883
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1376907  0.0077899 0.1218232 0.1535582
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.118886   0.004502 0.109716 0.128057
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.206342   0.016866 0.171988 0.240696
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.175509   0.013954 0.147086 0.203932
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.65376    0.63282 -0.63525  1.94277
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.118335   0.011733 0.094404 0.142265
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.189945   0.013146 0.163097 0.216793
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0483296  0.0022658 0.0437143 0.0529448
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.190146   0.027182 0.134779 0.245514
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.16580    0.01082 0.14376 0.18784
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.183297   0.017237 0.148187 0.218407
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.130147   0.010705 0.108342 0.151951
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1915200  0.0077369 0.1757605 0.2072795
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.123034   0.006696 0.109395 0.136673
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1935594  0.0094277 0.1743559 0.2127629
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.198000   0.019219 0.158853 0.237148
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1114482  0.0070542 0.0970793 0.1258172
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.159440   0.010423 0.138209 0.180671
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1372654  0.0070847 0.1228343 0.1516965
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1070318  0.0055365 0.0957543 0.1183094
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.248655   0.028485 0.190633 0.306678
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.167592   0.010197 0.146821 0.188362
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1082677  0.0051459 0.0977858 0.1187495
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.184271   0.036047 0.110846 0.257695
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.123288   0.014018 0.094735 0.151841
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0998727  0.0044787 0.0907498 0.1089956
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.227432   0.040614 0.144704 0.310160
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.101863   0.003487 0.094760 0.108965
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.69465    0.39164 -0.10310  1.49240
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.113975   0.012773 0.087958 0.139993
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.217436   0.027934 0.160536 0.274335
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1102721  0.0033354 0.1034780 0.1170661
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1432333  0.0093132 0.1242629 0.1622036
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.18336    0.01293 0.15695 0.20977
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.186929   0.034023 0.117626 0.256232
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0299288  0.0017812 0.0263007 0.0335569
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.200379   0.020104 0.159429 0.241329
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.30812    0.24033 -0.18142  0.79765
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.227103   0.019697 0.186983 0.267224
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.20009    0.01448 0.17059 0.22958
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.223966   0.058089 0.105642 0.342290
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.288001   0.074597 0.136052 0.439951
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.369422   0.077015 0.212549 0.526296
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50  0.427766   0.230327 -0.041395  0.896927
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0991738  0.0040323 0.0909603 0.1073874
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.156127   0.021551 0.112229 0.200025
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.308127   0.019233 0.268951 0.347304
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.201737   0.012113 0.176998 0.226476
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.306968   0.078617 0.146831 0.467105
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.289597   0.081347 0.123464 0.455730
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.213191   0.024013 0.164278 0.262104
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1352667  0.0074545 0.1200824 0.1504511
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.247784   0.036714 0.173000 0.322567
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.235268   0.026532 0.181223 0.289313
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.066926   0.010213 0.046123 0.087728
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.174492   0.010501 0.153102 0.195882
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.181951   0.028336 0.124233 0.239669
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.195576   0.013476 0.168125 0.223027
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.168410   0.010795 0.146421 0.190399
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1546980  0.0093702 0.1354373 0.1739588
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.162666   0.011066 0.140126 0.185206
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.42728    0.28840 -0.16017  1.01472
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0900834  0.0021351 0.0857344 0.0944324
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1573077  0.0065037 0.1440602 0.1705553
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.16319    0.01761 0.12732 0.19906
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.20914    0.01403 0.18056 0.23772
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.17905    0.00849 0.16171 0.19639
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1587569  0.0098007 0.1387411 0.1787727
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.211026   0.012571 0.185419 0.236633</code></pre>
+<pre><code>## # A tibble: 75 × 4
+## # Groups:   is [75]
+##    is         data               ll.4.mod   ec50
+##    &lt;chr&gt;      &lt;list&gt;             &lt;list&gt;    &lt;dbl&gt;
+##  1 ILSO_5-41c &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.107 
+##  2 ILSO_5-42c &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.249 
+##  3 ILSO_5-49b &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.168 
+##  4 ILSO_6-1   &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.108 
+##  5 ILSO_6-12B &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.184 
+##  6 ILSO_6-2b  &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.227 
+##  7 ILSO_6-33C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.102 
+##  8 ILSO_6-39C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.110 
+##  9 ILSO_6-15b &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.123 
+## 10 ILSO_6-28C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.0999
+## # ℹ 65 more rows</code></pre>
+<p>Ok that was alot…</p>
+<p>So lets break down what each step does after the pipe.</p>
+<p><strong>Step 1.</strong> All we are doing is setting a grouping
+variable. This is what we want to loop over. The grouping variable can
+be multiple variables, but in this case we just want isolate as the
+grouping variable. When running the code below, it wont look like much
+has happened other than you will notice a Groups header at the top of
+the table.</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is)</code></pre>
+<p><strong>Step 2.</strong> Next we are going to “nest’. This says that
+for all the data for each isolate we want to collapse that into a column
+called data.</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is) %&gt;%
+  nest()</code></pre>
+<p><strong>Step 3.</strong> Next we can enter our formula to iterate
+over for each set of data for each isolate. Now this is a lot. So lets
+break it down. The function mutate tells R to create a new column. We
+are going to call it ll.4.mod. This column is going to be equal to our
+output of our function from drm. The map function tells R to iterate
+over the grouped variable, isolate. We will use data within the data
+column for the mapping. The ‘.’ tells R that we are considering all the
+data. Then a $ followed by the column headers in the data as the input
+into our drm function. The rest of the options are consistent with the
+loop above. The output will contain a new column with ll.4.mod column
+which contains a drm model for each isolate.</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is) %&gt;%
+  nest() %&gt;%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;)))))</code></pre>
+<p><strong>Step 4.</strong> Next we just want to estimate the EC50 for
+each fitted model contained within the ll.4.mod column. So we apply
+another mutate to create another column we will name ec50 and we want to
+map over the ll.4.mod column because we want to apply the function ED to
+each model fit. The brackets after the ED function [[1]] means we want
+the first element in that output, which is the EC50. I know this because
+I’ve looked at the output for one isolate and figured out how to get
+just the EC50 data output.</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is) %&gt;%
+  nest() %&gt;%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;))))) %&gt;%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = &quot;relative&quot;,
+                              interval = &quot;delta&quot;)[[1]]))</code></pre>
+<p><strong>Step 5.</strong> Now last thing we do is to unnest the ec50
+column. This should just be a single number so it will essentially
+‘extract’ the value from the nesting.</p>
+<pre class="r"><code>EC50.data %&gt;%
+  group_by(is) %&gt;%
+  nest() %&gt;%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c(&quot;Slope&quot;, &quot;Lower&quot;, &quot;Upper&quot;, &quot;EC50&quot;))))) %&gt;%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = &quot;relative&quot;,
+                              interval = &quot;delta&quot;)[[1]])) %&gt;%
+  unnest(ec50)</code></pre>
+<pre><code>## Warning: There were 19 warnings in `mutate()`.
+## The first warning was:
+## ℹ In argument: `ll.4.mod = map(...)`.
+## ℹ In group 4: `is = &quot;C-MNSO2_2-10&quot;`.
+## Caused by warning in `log()`:
+## ! NaNs produced
+## ℹ Run `dplyr::last_dplyr_warnings()` to see the 18 remaining warnings.</code></pre>
+<pre><code>## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.106855   0.022010 0.062022 0.151687
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.177036   0.011915 0.152767 0.201305
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.234268   0.017095 0.199447 0.269088
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0172659  0.0012838 0.0146508 0.0198809
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.117014   0.012255 0.092052 0.141977
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.147113   0.008233 0.130343 0.163883
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1376907  0.0077899 0.1218232 0.1535582
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.118886   0.004502 0.109716 0.128057
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.206342   0.016866 0.171988 0.240696
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.175509   0.013954 0.147086 0.203932
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.65376    0.63282 -0.63525  1.94277
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.118335   0.011733 0.094404 0.142265
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.189945   0.013146 0.163097 0.216793
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0483296  0.0022658 0.0437143 0.0529448
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.190146   0.027182 0.134779 0.245514
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.16580    0.01082 0.14376 0.18784
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.183297   0.017237 0.148187 0.218407
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.130147   0.010705 0.108342 0.151951
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1915200  0.0077369 0.1757605 0.2072795
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.123034   0.006696 0.109395 0.136673
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1935594  0.0094277 0.1743559 0.2127629
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.198000   0.019219 0.158853 0.237148
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1114482  0.0070542 0.0970793 0.1258172
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.159440   0.010423 0.138209 0.180671
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1372654  0.0070847 0.1228343 0.1516965
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1070318  0.0055365 0.0957543 0.1183094
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.248655   0.028485 0.190633 0.306678
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.167592   0.010197 0.146821 0.188362
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1082677  0.0051459 0.0977858 0.1187495
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.184271   0.036047 0.110846 0.257695
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.123288   0.014018 0.094735 0.151841
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0998727  0.0044787 0.0907498 0.1089956
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.227432   0.040614 0.144704 0.310160
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.101863   0.003487 0.094760 0.108965
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.69465    0.39164 -0.10310  1.49240
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.113975   0.012773 0.087958 0.139993
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.217436   0.027934 0.160536 0.274335
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1102721  0.0033354 0.1034780 0.1170661
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1432333  0.0093132 0.1242629 0.1622036
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.18336    0.01293 0.15695 0.20977
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.186929   0.034023 0.117626 0.256232
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0299288  0.0017812 0.0263007 0.0335569
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.200379   0.020104 0.159429 0.241329
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.30812    0.24033 -0.18142  0.79765
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.227103   0.019697 0.186983 0.267224
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.20009    0.01448 0.17059 0.22958
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.223966   0.058089 0.105642 0.342290
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.288001   0.074597 0.136052 0.439951
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.369422   0.077015 0.212549 0.526296
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50  0.427766   0.230327 -0.041395  0.896927
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0991738  0.0040323 0.0909603 0.1073874
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.156127   0.021551 0.112229 0.200025
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.308127   0.019233 0.268951 0.347304
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.201737   0.012113 0.176998 0.226476
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.306968   0.078617 0.146831 0.467105
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.289597   0.081347 0.123464 0.455730
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.213191   0.024013 0.164278 0.262104
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1352667  0.0074545 0.1200824 0.1504511
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.247784   0.036714 0.173000 0.322567
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.235268   0.026532 0.181223 0.289313
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.066926   0.010213 0.046123 0.087728
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.174492   0.010501 0.153102 0.195882
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.181951   0.028336 0.124233 0.239669
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.195576   0.013476 0.168125 0.223027
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.168410   0.010795 0.146421 0.190399
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1546980  0.0093702 0.1354373 0.1739588
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.162666   0.011066 0.140126 0.185206
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50  0.42728    0.28840 -0.16017  1.01472
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.0900834  0.0021351 0.0857344 0.0944324
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1573077  0.0065037 0.1440602 0.1705553
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.16319    0.01761 0.12732 0.19906
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.20914    0.01403 0.18056 0.23772
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error   Lower   Upper
+## e:1:50  0.17905    0.00849 0.16171 0.19639
+## 
+## Estimated effective doses
+## 
+##         Estimate Std. Error     Lower     Upper
+## e:1:50 0.1587569  0.0098007 0.1387411 0.1787727
+## 
+## Estimated effective doses
+## 
+##        Estimate Std. Error    Lower    Upper
+## e:1:50 0.211026   0.012571 0.185419 0.236633</code></pre>
+<pre><code>## # A tibble: 75 × 4
+## # Groups:   is [75]
+##    is         data               ll.4.mod   ec50
+##    &lt;chr&gt;      &lt;list&gt;             &lt;list&gt;    &lt;dbl&gt;
+##  1 ILSO_5-41c &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.107 
+##  2 ILSO_5-42c &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.249 
+##  3 ILSO_5-49b &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.168 
+##  4 ILSO_6-1   &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.108 
+##  5 ILSO_6-12B &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.184 
+##  6 ILSO_6-2b  &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.227 
+##  7 ILSO_6-33C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.102 
+##  8 ILSO_6-39C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.110 
+##  9 ILSO_6-15b &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.123 
+## 10 ILSO_6-28C &lt;tibble [36 × 11]&gt; &lt;drc&gt;    0.0999
+## # ℹ 65 more rows</code></pre>
+<p>The resulting table will look something like this, and you can use
+the ec50 column for further analysis.</p>
+</div>
+</div>
 </div>
 
 

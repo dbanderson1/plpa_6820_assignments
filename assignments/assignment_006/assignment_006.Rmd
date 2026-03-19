@@ -3,11 +3,11 @@ title: "Assignment_006_rmarkdown - Iterations and Functions"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
      
@@ -102,5 +102,290 @@ C_to_F(0)
 C_to_F(40)
 F_to_C(40)
 ```
-# Interations
+# Iterations
 
+Iterations are something you do over and over again. They are useful for multiple reasons. In terms of reproducibility, it again, helps reduce copy and paste errors for something we would like to do over and over again. It can also helpful for sanity checks through data simulation.
+
+In this example we will cover iterations in the following functions 
+
+1. rep() 
+2. seq() & seq_along() 
+3. for loops map() *nested map()
+
+## the rep() function
+
+```{r}
+rep("A", 3) # repeats A three times 
+
+rep(c("A", "B"), 5) # repeats A and B, times 
+
+rep(c(1,2,3,4), times = 4) # repeats 1,2,3,4, 4 times 
+
+rep(c(1,2,5,2), times = 4, each = 4) # repeats 1 four times, 2 four times, 5 four times, and 2 four times. 
+```
+## The seq() function
+
+This function allows you to write sequences of numbers easily
+
+The seq_along() function allows you to generate a sequence of numbers based on non-integer values. This will become very useful when we want to loop over elements within a dataframe.
+
+```{r}
+seq(from = 1, to = 7) # sequence of numbers 1 to 7
+
+seq(from = 0, to = 10, by = 2) # sequence of numbers from 0 to 10 by 2s 
+
+# combined seq() and rep()
+rep(seq(from = 0, to = 10, by = 2), times = 3, each = 2)
+
+seq_along(LETTERS[1:5]) # will return 1,2,3,4,5 not the actual letters. 
+
+```
+# The for loop
+
+The for loop is classic coding. Almost every coding language has a version of a for loop.
+
+Lets see a very basic example of how a for loop works
+
+```{r}
+for (i in 1:10) {
+print(i*2)  
+}
+```
+lets see a more complicated example where we can also use our functions in a loop for example.
+```{r}
+for (i in -30:100){
+  result <- F_to_C(i)
+  print(result)
+}
+```
+This was great, but this only printed to the console, and we cannot really do anything with those values. What if we wanted to do something with the result of the iteration?
+
+Steps:
+
+1. Set a R object to NULL
+2. Set your for loop
+3. Save the result of your for loop into a dataframe each iteration
+4. append one row of the dataframe to the null object each iteration of the loop. 
+
+```{r}
+celcius.df <- NULL 
+for (i in -30:100){   
+result_i <- data.frame(F_to_C(i), i)   
+celcius.df <- rbind.data.frame(celcius.df, result_i) 
+}
+```
+
+# Dose Response Challenge
+
+Within this dataset is a list of isolates and fungicide sensitivity data.
+
+We want to find something called an EC50 or the concentration of a fungicide that reduces growth by 50% relative to the non-amended control.
+
+To do this we use a non-linear regression of the radial growth of a fungus against the log concentration of a fungicide, and find the half-maximal response as shown in the image below. 
+
+## Read Data
+
+```{r}
+EC50.data <- read.csv("data_files/EC50_all.csv")
+```
+
+We want to find something called an EC50 or the concentration of a fungicide that reduces growth by 50% relative to the non-amended control.
+
+To do this we use a non-linear regression of the radial growth of a fungus against the log concentration of a fungicide, and find the half-maximal response as shown in the image below. 
+
+The exact details of the statistics are not super important for you to know, but just know that this example studies can include hundreds of individual isolates to model this EC50 value, and this can be very cumbersome if we had to write code for every isolate. 
+
+We do this using non-linear modeling with the DRC package with a model called the LL.4 The specifics of the model are not that important. What is important is that in order to use this model we have to model each isolate individually and gather the EC50 data.
+
+An example is shown here where we do this on isolate ILSO_5-41c
+
+```{r}
+isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == "ILSO_5-41c"] ~ 
+        EC50.data$conc[EC50.data$is == "ILSO_5-41c"], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+```
+It would not be reproducible to copy and paste each isolate into the code above to run the model for every isolate. It would also not be very reproducible to copy and paste the code below since this is prone to errors.
+
+## The Loop
+
+There are then two options: a loop that iterates over isolate names in a newer way using the function map()
+
+I will demonstrate how to do each option.
+
+### First the loop
+
+First, we need to create a vector to loop over containing the names of our isolates. We will call this ‘nm’ using the function ‘unique’.
+
+```{r}
+nm <- unique(EC50.data$is)
+```
+
+
+Then we can write a loop using the code above and input our list of isolates, ‘nm’ by using ‘seq_along’
+
+Then, whenever we want to input our isolate name, we will put nm[[i]].
+
+So, as the loop goes along the list of isolate names, it will input the name of the isolate, calculate EC50, and run the model and output EC50.
+
+```{r, eval=FALSE}
+# used eval=FALSE so we don't have huge printed results list of all 76 isolates
+
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+}
+```
+
+### Second Loop
+
+Awesome! we have all of our EC50 values very quickly.
+
+But this is still not super helpful because the output is not saved and we cant use it in a plot or something. So, we now need to save the output of a loop into a dataframe.
+
+The way we do this is to create the dataframe row by row in the loop.
+
+To do this we first need to creat a null dataframe and add to it each iteration.
+
+```{r, results='hide'}
+# used results='hide'to hide results which are stored in dataframe
+EC50.ll4 <- NULL # create a null object 
+for (i in seq_along(nm)) {
+  isolate1 <- drm(100 * EC50.data$relgrowth[EC50.data$is == nm[[i]]] ~ 
+        EC50.data$conc[EC50.data$is == nm[[i]]], 
+                       fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                  names = c("Slope", "Lower", "Upper", "EC50")), 
+                       na.action = na.omit)
+    # outputs the summary of the paramters including the estimate, standard
+    # error, t-value, and p-value outputs it into a data frame called
+    # summary.mef.fit for 'summary of fit'
+    summary.fit <- data.frame(summary(isolate1)[[3]])
+    # outputs the summary of just the EC50 data including the estimate, standard
+    # error, upper and lower bounds of the 95% confidence intervals around the
+    # EC50
+    EC50 <- ED(isolate1, respLev = c(50), type = "relative", 
+        interval = "delta")[[1]]
+    EC50
+    isolate.ec_i <- data.frame(nm[[i]], EC50) # create a one row dataframe containing just the isolate name and the EC50
+    colnames(isolate.ec_i) <- c("Isolate", "EC50") # change the column names
+    
+    # Then we need to append our one row dataframe to our null dataframe we created before
+    # and save it as EC50.ll4. 
+    EC50.ll4 <- rbind.data.frame(EC50.ll4, isolate.ec_i)
+}
+```
+Now we have a final dataset with EC50 data contained within EC50.ll4 that was appended with each isolate upon each iteration. Something we can use in a graph for example for publication. Like this.
+
+```{r}
+ggplot(EC50.ll4, aes(x = EC50)) + geom_histogram() + theme_classic()
+```
+## Using map with the tidyverse 
+
+However, just like everything else in R, there are multiple ways to do the same thing.
+
+Lets demonstrate this example with the function map() and nested dataframes within the tidyr package.
+
+The concept is that loops are combersome and hard to read. So, the map() function was created and everything is contained within the same R object.
+
+Here is the example of how to do the same loop as above but with the map() function:
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+Ok that was alot... 
+
+So lets break down what each step does after the pipe.
+
+**Step 1.** All we are doing is setting a grouping variable. This is what we want to loop over. The grouping variable can be multiple variables, but in this case we just want isolate as the grouping variable. When running the code below, it wont look like much has happened other than you will notice a Groups header at the top of the table.
+
+```{r eval=FALSE}
+EC50.data %>%
+  group_by(is)
+```
+
+**Step 2.** Next we are going to “nest’. This says that for all the data for each isolate we want to collapse that into a column called data.
+
+```{r eval=FALSE}
+EC50.data %>%
+  group_by(is) %>%
+  nest()
+```
+
+**Step 3.** Next we can enter our formula to iterate over for each set of data for each isolate. Now this is a lot. So lets break it down. The function mutate tells R to create a new column. We are going to call it ll.4.mod. This column is going to be equal to our output of our function from drm. The map function tells R to iterate over the grouped variable, isolate. We will use data within the data column for the mapping. The ‘.’ tells R that we are considering all the data. Then a $ followed by the column headers in the data as the input into our drm function. The rest of the options are consistent with the loop above. The output will contain a new column with ll.4.mod column which contains a drm model for each isolate.
+
+```{r eval=FALSE}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50")))))
+```
+
+**Step 4.** Next we just want to estimate the EC50 for each fitted model contained within the ll.4.mod column. So we apply another mutate to create another column we will name ec50 and we want to map over the ll.4.mod column because we want to apply the function ED to each model fit. The brackets after the ED function [[1]] means we want the first element in that output, which is the EC50. I know this because I’ve looked at the output for one isolate and figured out how to get just the EC50 data output.
+
+```{r, eval=FALSE}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]]))
+```
+
+**Step 5.** Now last thing we do is to unnest the ec50 column. This should just be a single number so it will essentially ‘extract’ the value from the nesting. 
+
+```{r}
+EC50.data %>%
+  group_by(is) %>%
+  nest() %>%
+  mutate(ll.4.mod = map(data, ~drm(.$relgrowth ~ .$conc, 
+                              fct = LL.4(fixed = c(NA, NA, NA, NA), 
+                                         names = c("Slope", "Lower", "Upper", "EC50"))))) %>%
+  mutate(ec50 = map(ll.4.mod, ~ED(., 
+                              respLev = c(50), 
+                              type = "relative",
+                              interval = "delta")[[1]])) %>%
+  unnest(ec50)
+```
+
+The resulting table will look something like this, and you can use the ec50 column for further analysis. 

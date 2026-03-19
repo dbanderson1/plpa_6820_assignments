@@ -31,6 +31,8 @@ For ease of reference here are links to graded files:
     [assingment_4.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_004/assignment_004.Rmd)
   - [assingment_5.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_005/assignment_005.md),
     [assingment_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_005/assignment_005.Rmd)
+  - [assingment_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.md),
+    [assingment_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.Rmd)
 - coding challenges
   - [coding_challenge_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_1/coding_challenge_1.R)
   - [coding_challenge_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_2/coding_challenge_2.R)
@@ -65,14 +67,18 @@ fs::dir_tree()
 │   │   │   └── figure-gfm
 │   │   │       └── include figures-1.png
 │   │   └── pressure-1.png
-│   └── assignment_005
-│       ├── assignment_005.html
-│       ├── assignment_005.md
-│       ├── assignment_005.Rmd
-│       └── assignment_005_files
-│           └── figure-gfm
-│               ├── unnamed-chunk-11-1.png
-│               └── unnamed-chunk-16-1.png
+│   ├── assignment_005
+│   │   ├── assignment_005.html
+│   │   ├── assignment_005.md
+│   │   ├── assignment_005.Rmd
+│   │   └── assignment_005_files
+│   │       └── figure-gfm
+│   │           ├── unnamed-chunk-11-1.png
+│   │           └── unnamed-chunk-16-1.png
+│   └── assignment_006
+│       ├── assignment_006.html
+│       ├── assignment_006.md
+│       └── assignment_006.Rmd
 ├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R
@@ -100,6 +106,9 @@ fs::dir_tree()
 │   ├── Bull_richness.csv
 │   ├── corr.csv
 │   ├── diff_abund.csv
+│   ├── DiversityData.csv
+│   ├── EC50_all.csv
+│   ├── Metadata.csv
 │   ├── MycotoxinData.csv
 │   └── TipsR.csv
 ├── plpa_6820_assignments.Rproj # Top level R Project

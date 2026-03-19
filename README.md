@@ -41,8 +41,9 @@ For ease of reference here are links to graded files:
     [coding_challenge_4.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_4/coding_challenge_4.Rmd)
   - [coding_challenge_5.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.md),
     [coding_challenge_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.Rmd)
-
-## File Tree
+  - [coding_challenge_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.md),
+    [coding_challenge_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.Rmd)
+    \## File Tree
 
 File tree generated using r code and fs():
 
@@ -96,17 +97,22 @@ fs::dir_tree()
 │   │   └── coding_challenge_4_files
 │   │       └── figure-gfm
 │   │           └── Commbine and Display Plots-1.png
-│   └── coding_challenge_5
-│       ├── coding_challenge_5.html
-│       ├── coding_challenge_5.md
-│       ├── coding_challenge_5.Rmd
-│       └── coding_challenge_5_files
-│           └── figure-gfm
-│               └── Plot-1.png
+│   ├── coding_challenge_5
+│   │   ├── coding_challenge_5.html
+│   │   ├── coding_challenge_5.md
+│   │   ├── coding_challenge_5.Rmd
+│   │   └── coding_challenge_5_files
+│   │       └── figure-gfm
+│   │           └── Plot-1.png
+│   └── coding_challenge_6
+│       ├── coding_challenge_6.html
+│       ├── coding_challenge_6.md
+│       └── coding_challenge_6.Rmd
 ├── data_files              # Folder with data files used by scripts
 │   ├── anthro.csv
 │   ├── BacterialAlpha.csv
 │   ├── Bull_richness.csv
+│   ├── Cities.csv
 │   ├── corr.csv
 │   ├── diff_abund.csv
 │   ├── DiversityData.csv

@@ -79,6 +79,9 @@ fs::dir_tree()
 │       ├── assignment_006.html
 │       ├── assignment_006.md
 │       └── assignment_006.Rmd
+│       └── assignment_006_files
+│           └── figure-gfm
+│               └── unnamed-chunk-15-1.png
 ├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R

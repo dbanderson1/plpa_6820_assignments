@@ -3,11 +3,11 @@ title: "README"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
 ---
@@ -87,6 +87,9 @@ fs::dir_tree()
 │       ├── assignment_006.html
 │       ├── assignment_006.md
 │       └── assignment_006.Rmd
+│       └── assignment_006_files
+│           └── figure-gfm
+│               └── unnamed-chunk-15-1.png
 ├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R

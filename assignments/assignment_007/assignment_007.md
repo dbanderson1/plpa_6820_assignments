@@ -126,6 +126,8 @@ The null hypothesis is that H0 = No slope or that β1 = 0
 In general: - as slope goes up pvalue goes down - as sample size goes up
 pvalue goes down - as noise (error) goes down pvalue goes down
 
+# Continuous X and Continuous Y
+
 Lets load in our mtcars dataset to demonstrate some basic linear
 regression.
 
@@ -172,6 +174,8 @@ We run a linear model - or if its a continuous x variable and a
 continuous y variable we would call it a regression. If we are looking
 to call it a cause and effect relationship we may call it a correlation.
 
+## Linear Model
+
 The simplest way to do this is with the function `lm()`
 
 ``` r
@@ -188,6 +192,8 @@ lm(mpg~wt, data = mtcars)
 
 When we run this it gives us an output of the predicted Intercept or our
 β0 parameter.
+
+## Summary Statistics
 
 We can now run summary of this linear model to output some summary
 statistics
@@ -222,7 +228,7 @@ Other things to pay attention to are the R squared. This tells you the
 variation in y explained by x. So in our case about 74% of the variation
 in y is explained by x variable.
 
-[SSR & SSE](ss.jpg)
+## ANOVA
 
 Ok what if we wanted an ANOVA table from this. We could run an ANOVA.
 
@@ -245,7 +251,9 @@ ANOVA is the pvalue of the linear regression or our slope parameter.
 Meaning that wt has a significant effect on the variance of Miles per
 gallon.
 
-Perhaps we wanted to view this in a correlation.
+## Correlation Test
+
+Perhaps we wanted to view this in a correlation (e.g. Pearson’s)
 
 ``` r
 cor.test(mtcars$wt, mtcars$mpg)
@@ -308,9 +316,9 @@ ggplot(model, aes(y = .resid, x = .fitted)) +
 
 ![](assignment_007_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
 
-### Categorical variables
+# Categorical variables
 
-Now if we have a categorial x variable and a continuous y variable we
+Now if we have a categorical x variable and a continuous y variable we
 would perform a t-test.
 
 lets take our fungicide study bull richness dataset.
@@ -331,6 +339,8 @@ bull.rich %>%
 
 ![](assignment_007_files/figure-gfm/unnamed-chunk-10-1.png)<!-- --> Does
 it look like there is a difference, yeah! But how do we know?
+
+## T-Test
 
 We can do a t-test
 
@@ -369,7 +379,6 @@ mean of the Control group and 0 and the slope β1 is equal to the
 difference between groups.
 
 Visually this is what we are looking at. The t-test is a regression!
-[t-test](Ttest.jpg)
 
 We can plug this into our linear model and get the same results.
 
@@ -429,7 +438,7 @@ If we assume equal variance in groups and perform a two sample t-test it
 is the same result as a linear model and anova on the linear model. The
 pvalue is telling us that the slope of the line is different than 0.
 
-### ANOVAs
+## ANOVAs
 
 ANOVAs would have continuous y and multinomial categorical x. In other
 words multiple groups.
@@ -467,8 +476,6 @@ richness(V6) = β0 + 0 + ε~N(0,σ) and richness(V8) = β0 + β1 + ε~N(0,σ)
 richness(V15) = β0 + β2 + ε~N(0,σ)
 
 Visually it looks like this and guess what, its a regression!
-
-[ANOVA](anova.jpg)
 
 To show you lets do the actual test.
 
@@ -560,7 +567,7 @@ Results_lsmeans
     ## 
     ## P value adjustment: tukey method for comparing a family of 3 estimates
 
-### Interaction terms
+## Interaction terms
 
 So far we have done one variable, but what if we care about the
 interactions between factors. In other words what if we care about if
@@ -719,7 +726,7 @@ the linear model concept.
 
 [The cheat sheet](linear_tests_cheat_sheet.jpg)
 
-#### Mixed effects models
+# Mixed effects models
 
 In mixed effects models we have fixed and random effects term. The
 random effects term is something that affects the variation in y. A

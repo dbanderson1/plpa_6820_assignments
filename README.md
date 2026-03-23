@@ -33,6 +33,8 @@ For ease of reference here are links to graded files:
     [assingment_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_005/assignment_005.Rmd)
   - [assingment_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.md),
     [assingment_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.Rmd)
+  - [assingment_7.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_007/assignment_007.md),
+    [assingment_7.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_007/assignment_007.Rmd)
 - coding challenges
   - [coding_challenge_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_1/coding_challenge_1.R)
   - [coding_challenge_2](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_2/coding_challenge_2.R)
@@ -43,8 +45,6 @@ For ease of reference here are links to graded files:
     [coding_challenge_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.Rmd)
   - [coding_challenge_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.md),
     [coding_challenge_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.Rmd)
-  - [coding_challenge_7.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.md),
-    [coding_challenge_7.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.Rmd)
 
 ## File Tree
 

@@ -1498,7 +1498,8 @@ library(dplyr)
 # set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
-knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())</code></pre>
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())</code></pre>
 </div>
 <div id="question-1." class="section level1">
 <h1>Question 1.</h1>

@@ -2,76 +2,17 @@
 
 ``` r
 library(tidyverse)
-```
-
-    ## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-    ## ✔ dplyr     1.2.0     ✔ readr     2.1.6
-    ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
-    ## ✔ ggplot2   4.0.2     ✔ tibble    3.3.1
-    ## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-    ## ✔ purrr     1.2.1     
-    ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-    ## ✖ dplyr::filter() masks stats::filter()
-    ## ✖ dplyr::lag()    masks stats::lag()
-    ## ℹ Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
-
-``` r
 library(lme4)
-```
-
-    ## Loading required package: Matrix
-    ## 
-    ## Attaching package: 'Matrix'
-    ## 
-    ## The following objects are masked from 'package:tidyr':
-    ## 
-    ##     expand, pack, unpack
-
-``` r
 library(emmeans)
-```
-
-    ## Welcome to emmeans.
-    ## Caution: You lose important information if you filter this package's results.
-    ## See '? untidy'
-
-``` r
 # install.packages("multcomp")
 library(multcomp)
-```
-
-    ## Warning: package 'multcomp' was built under R version 4.5.3
-
-    ## Loading required package: mvtnorm
-    ## Loading required package: survival
-    ## Loading required package: TH.data
-    ## Loading required package: MASS
-    ## 
-    ## Attaching package: 'MASS'
-    ## 
-    ## The following object is masked from 'package:dplyr':
-    ## 
-    ##     select
-    ## 
-    ## 
-    ## Attaching package: 'TH.data'
-    ## 
-    ## The following object is masked from 'package:MASS':
-    ## 
-    ##     geyser
-
-``` r
 # install.packages("multcompView")
 library(multcompView)
-```
-
-    ## Warning: package 'multcompView' was built under R version 4.5.3
-
-``` r
 # set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
 ```
 
 # Introduction to regression analysis in R
@@ -165,7 +106,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](assignment_007_files/figure-gfm/unnamed-chunk-3-1.png)<!-- -->
+![](assignment_007_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
 
 Does it look like there is a relationship? Absolutly! But how do we
 know?
@@ -275,7 +216,7 @@ Holy smokes! the pvalue is the same again! This gives you a different r
 value which is the correlation statistic. The closer to -1 or 1 means
 the stronger the correlation between the two variables.
 
-### Assumptions
+## Assumptions
 
 In general there are several assumptions in a regression, linear model,
 ANOVA, whatever you want to call it.
@@ -314,7 +255,7 @@ ggplot(model, aes(y = .resid, x = .fitted)) +
     ## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
     ## generated.
 
-![](assignment_007_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](assignment_007_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
 # Categorical variables
 
@@ -337,7 +278,7 @@ bull.rich %>%
   geom_boxplot()
 ```
 
-![](assignment_007_files/figure-gfm/unnamed-chunk-10-1.png)<!-- --> Does
+![](assignment_007_files/figure-gfm/unnamed-chunk-9-1.png)<!-- --> Does
 it look like there is a difference, yeah! But how do we know?
 
 ## T-Test
@@ -461,7 +402,7 @@ ggplot(bull.rich.sub2, aes(x = GrowthStage, y = richness)) +
   geom_boxplot()
 ```
 
-![](assignment_007_files/figure-gfm/unnamed-chunk-14-1.png)<!-- --> Well
+![](assignment_007_files/figure-gfm/unnamed-chunk-13-1.png)<!-- --> Well
 there clearly looks to be a difference between the groups.
 
 Mathematically we again can think of this as a regression analysis where
@@ -672,7 +613,7 @@ bull.rich.sub3 %>%
   geom_boxplot()
 ```
 
-![](assignment_007_files/figure-gfm/unnamed-chunk-20-1.png)<!-- -->
+![](assignment_007_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 So by visualization we can see that it looks like V8 fungicide affected
 richness more than others and by V15 they recovered.
@@ -723,8 +664,6 @@ Results_lsmeans
 
 This cheat sheet gives you all kinds of tests that are all based around
 the linear model concept.
-
-[The cheat sheet](linear_tests_cheat_sheet.jpg)
 
 # Mixed effects models
 

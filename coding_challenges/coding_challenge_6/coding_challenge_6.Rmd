@@ -23,6 +23,7 @@ library(dplyr)
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
 ```
 
 # Question 1.	

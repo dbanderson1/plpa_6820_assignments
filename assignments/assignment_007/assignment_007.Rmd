@@ -3,18 +3,18 @@ title: "Coding Assignment 6 - Linear Models Notes"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
 ---
 
 # Global Setup
 
-```{r}
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(lme4)
 library(emmeans)
@@ -26,6 +26,7 @@ library(multcompView)
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
 ```
 
 
@@ -151,7 +152,7 @@ cor.test(mtcars$wt, mtcars$mpg)
 ```
 Holy smokes! the pvalue is the same again! This gives you a different r value which is the correlation statistic. The closer to -1 or 1 means the stronger the correlation between the two variables. 
 
-### Assumptions
+## Assumptions
 
 In general there are several assumptions in a regression, linear model, ANOVA, whatever you want to call it. 
 
@@ -284,7 +285,6 @@ Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) #
 Results_lsmeans
 ```
 
-
 ## Interaction terms
 
 So far we have done one variable, but what if we care about the interactions between factors. In other words what if we care about if the effect of one factor depends on the other. 
@@ -335,8 +335,6 @@ Results_lsmeans
 ```
 
 This cheat sheet gives you all kinds of tests that are all based around the linear model concept. 
-
-[The cheat sheet](linear_tests_cheat_sheet.jpg)
 
 # Mixed effects models
 
@@ -400,3 +398,4 @@ anova(lme2, lm1)
 ```
 
 So, in this case we took something that probably should be a fixed effect and included it as a random effect. We still have a significant result, but modeling the random effect means that we are better able to estimate the betas. When we do an anova between the two models it is significant meaning that the within growthstage variation is important. 
+

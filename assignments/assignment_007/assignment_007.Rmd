@@ -3,11 +3,11 @@ title: "Coding Assignment 6 - Linear Models Notes"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
   word_document:
   pdf_document:
 ---
@@ -78,6 +78,8 @@ In general:
  - as sample size goes up pvalue goes down
  - as noise (error) goes down pvalue goes down
 
+# Continuous X and Continuous Y
+
 Lets load in our mtcars dataset to demonstrate some basic linear regression.
 ```{r}
 data("mtcars")
@@ -114,11 +116,15 @@ Does it look like there is a relationship? Absolutly! But how do we know?
 
 We run a linear model - or if its a continuous x variable and a continuous y variable we would call it a regression. If we are looking to call it a cause and effect relationship we may call it a correlation. 
 
+## Linear Model
+
 The simplest way to do this is with the function `lm()`
 ```{r}
 lm(mpg~wt, data = mtcars)
 ```
 When we run this it gives us an output of the predicted Intercept or our β0 parameter. 
+
+## Summary Statistics
 
 We can now run summary of this linear model to output some summary statistics
 ```{r}
@@ -129,7 +135,7 @@ Now we have a pretty good idea that the slope is not equal to 0 and the estimate
 
 Other things to pay attention to are the R squared. This tells you the variation in y explained by x. So in our case about 74% of the variation in y is explained by x variable. 
 
-[SSR & SSE](ss.jpg)
+## ANOVA
 
 Ok what if we wanted an ANOVA table from this. We could run an ANOVA. 
 ```{r}
@@ -137,7 +143,9 @@ anova(lm(mpg~wt, data = mtcars))
 ```
 Hey the pvalue is the same!!! Whoa... it means that a linear model and an ANOVA are essentially the same thing and the pvalue reported in the ANOVA is the pvalue of the linear regression or our slope parameter. Meaning that wt has a significant effect on the variance of Miles per gallon. 
 
-Perhaps we wanted to view this in a correlation. 
+## Correlation Test
+
+Perhaps we wanted to view this in a correlation (e.g. Pearson's)
 ```{r}
 cor.test(mtcars$wt, mtcars$mpg)
 ```
@@ -154,6 +162,7 @@ They are:
   - homoskedasticity - sigma is consistent 
   - independent samples 
   
+  
 However, in general regression/anovas/linear models are robust to moderate departures from the assumptions. So do the assumptions matter... yeah, but only if really terrible. However, in most cases if one assumption is violated, its not going to change the result too much. If anything it will make the pvalue go up and your conclusion is more conservative at that point. 
 
 Yes there are assumption tests, but we will not do them. You really just need to know how to read your data and if you want look at the residual plot to diagnose your violated assumptions. 
@@ -167,9 +176,9 @@ ggplot(model, aes(y = .resid, x = .fitted)) +
   geom_hline(yintercept = 0)
 ```
 
-### Categorical variables
+# Categorical variables
 
-Now if we have a categorial x variable and a continuous y variable we would perform a t-test. 
+Now if we have a categorical x variable and a continuous y variable we would perform a t-test. 
 
 lets take our fungicide study bull richness dataset. 
 ```{r}
@@ -184,6 +193,8 @@ bull.rich %>%
   geom_boxplot()
 ```
 Does it look like there is a difference, yeah! But how do we know?
+
+## T-Test
 
 We can do a t-test
 
@@ -209,7 +220,6 @@ richness = β0 + β1 + ε~N(0,σ)
 
 Visually this is what we are looking at. 
 The t-test is a regression! 
-[t-test](Ttest.jpg)
 
 We can plug this into our linear model and get the same results. 
 ```{r}
@@ -221,8 +231,7 @@ anova(lm(richness~Fungicide, data = bull.rich.sub))
 
 If we assume equal variance in groups and perform a two sample t-test it is the same result as a linear model and anova on the linear model. The pvalue is telling us that the slope of the line is different than 0. 
 
-
-### ANOVAs
+## ANOVAs
 
 ANOVAs would have continuous y and multinomial categorical x. In other words multiple groups. 
 
@@ -254,9 +263,6 @@ richness(V15) = β0 + β2 + ε~N(0,σ)
 
 Visually it looks like this and guess what, its a regression! 
 
-[ANOVA](anova.jpg)
-
-
 To show you lets do the actual test. 
 
 Set up the linear model and run various ANOVAs... holy smokes they all have the same information. Thats because an ANOVA is a regression!
@@ -279,7 +285,7 @@ Results_lsmeans
 ```
 
 
-### Interaction terms
+## Interaction terms
 
 So far we have done one variable, but what if we care about the interactions between factors. In other words what if we care about if the effect of one factor depends on the other. 
 
@@ -332,7 +338,7 @@ This cheat sheet gives you all kinds of tests that are all based around the line
 
 [The cheat sheet](linear_tests_cheat_sheet.jpg)
 
-#### Mixed effects models
+# Mixed effects models
 
 In mixed effects models we have fixed and random effects term. The random effects term is something that affects the variation in y. A fixed effect is something that affects the mean of y. There are NO rules that determine what is a fixed or random effect. You have to justify that in your experimental design. Another way to think about this would be factors that you do not really care about them affecting the mean, but still want to account for that variation in your model so you can generalize over that factor. A common way that random effects are included in experimental designs is called the blocking factor. 
 

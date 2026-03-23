@@ -21,7 +21,7 @@ library(drc)
 library(dplyr)
 # set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
-# this sets the root file project to the main R project direcotry not location of current Rmd file
+# this sets the root file project to the main R project directory not location of current Rmd file
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 ```
 

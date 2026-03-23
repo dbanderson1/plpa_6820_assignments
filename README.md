@@ -43,6 +43,8 @@ For ease of reference here are links to graded files:
     [coding_challenge_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.Rmd)
   - [coding_challenge_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.md),
     [coding_challenge_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.Rmd)
+  - [coding_challenge_7.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.md),
+    [coding_challenge_7.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.Rmd)
 
 ## File Tree
 
@@ -77,13 +79,29 @@ fs::dir_tree()
 │   │       └── figure-gfm
 │   │           ├── unnamed-chunk-11-1.png
 │   │           └── unnamed-chunk-16-1.png
-│   └── assignment_006
-│       ├── assignment_006.html
-│       ├── assignment_006.md
-│       └── assignment_006.Rmd
-│       └── assignment_006_files
+│   ├── assignment_006
+│   │   ├── assignment_006.html
+│   │   ├── assignment_006.md
+│   │   ├── assignment_006.Rmd
+│   │   └── assignment_006_files
+│   │       └── figure-gfm
+│   │           └── unnamed-chunk-15-1.png
+│   └── assignment_007
+│       ├── assignment_007.html
+│       ├── assignment_007.md
+│       ├── assignment_007.Rmd
+│       └── assignment_007_files
 │           └── figure-gfm
-│               └── unnamed-chunk-15-1.png
+│               ├── unnamed-chunk-10-1.png
+│               ├── unnamed-chunk-13-1.png
+│               ├── unnamed-chunk-14-1.png
+│               ├── unnamed-chunk-19-1.png
+│               ├── unnamed-chunk-2-1.png
+│               ├── unnamed-chunk-20-1.png
+│               ├── unnamed-chunk-3-1.png
+│               ├── unnamed-chunk-7-1.png
+│               ├── unnamed-chunk-8-1.png
+│               └── unnamed-chunk-9-1.png
 ├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R

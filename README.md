@@ -45,6 +45,8 @@ For ease of reference here are links to graded files:
     [coding_challenge_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_5/coding_challenge_5.Rmd)
   - [coding_challenge_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.md),
     [coding_challenge_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_6/coding_challenge_6.Rmd)
+  - [coding_challenge_7.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.md),
+    [coding_challenge_7.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_7/coding_challenge_7.Rmd)
 
 ## File Tree
 
@@ -123,10 +125,17 @@ fs::dir_tree()
 │   │   └── coding_challenge_5_files
 │   │       └── figure-gfm
 │   │           └── Plot-1.png
-│   └── coding_challenge_6
-│       ├── coding_challenge_6.html
-│       ├── coding_challenge_6.md
-│       └── coding_challenge_6.Rmd
+│   ├── coding_challenge_6
+│   │   ├── coding_challenge_6.html
+│   │   ├── coding_challenge_6.md
+│   │   └── coding_challenge_6.Rmd
+│   └── coding_challenge_7
+│       ├── coding_challenge_7.html
+│       ├── coding_challenge_7.md
+│       ├── coding_challenge_7.Rmd
+│       └── coding_challenge_7_files
+│           └── figure-gfm
+│               └── unnamed-chunk-6-1.png
 ├── data_files              # Folder with data files used by scripts
 │   ├── anthro.csv
 │   ├── BacterialAlpha.csv

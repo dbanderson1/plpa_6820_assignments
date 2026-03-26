@@ -1,0 +1,139 @@
+---
+title: "Coding Challenge 6 - Linear Models"
+author: "Derek Anderson"
+date: "`r Sys.Date()`"
+output:
+  md_document:
+    variant: gfm
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# Question 1.	
+
+4 pts. Read in the data called “PlantEmergence.csv” using a relative file path and load the following libraries. tidyverse, lme4, emmeans, multcomp, and multcompView. Turn the Treatment , DaysAfterPlanting  and Rep into factors using the function as.factor
+
+## Load Libraries
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(lme4)
+library(emmeans)
+# install.packages("multcomp")
+library(multcomp)
+# install.packages("multcompView")
+library(multcompView)
+# set the default global option for displaying code chunks
+knitr::opts_chunk$set(echo = TRUE)
+# this sets the root file project to the main R project directory not location of current Rmd file
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
+```
+
+## Read Data
+```{r}
+plant.emergence <- read.csv("data_files/PlantEmergence.csv")
+```
+
+## Create Factors
+```{r}
+# Factors
+plant.emergence$Treatment <- as.factor(plant.emergence$Treatment) #Treatment Factor
+plant.emergence$Rep <- as.factor(plant.emergence$Rep) #Rep Factor
+plant.emergence$DaysAfterPlanting <- as.factor(plant.emergence$DaysAfterPlanting) #Days After Planting Factor
+```
+
+# Question 2.	
+
+5 pts. Fit a linear model to predict Emergence using Treatment and DaysAfterPlanting along with the interaction. Provide the summary of the linear model and ANOVA results. 
+
+```{r}
+emergence.lm <- lm(Emergence ~ Treatment * DaysAfterPlanting, data = plant.emergence)
+summary(emergence.lm)
+anova(emergence.lm)
+```
+
+# Question 3.	
+
+5 pts. Based on the results of the linear model in question 2, do you need to fit the interaction term? Provide a simplified linear model without the interaction term but still testing both main effects. Provide the summary and ANOVA results. Then, interpret the intercept and the coefficient for Treatment 2.
+
+From the above table we see that "Treatment:DaysAfterPlanting  p = 1>." The interaction is not statistically significant (p=1), meaning the effect of treatment does not depend on the day after planting. Therefore, you can simplify the model and remove the interaction while still keeping the main effects.
+
+```{r}
+emergence.lm.simple <- lm(Emergence ~ Treatment + DaysAfterPlanting, data = plant.emergence)
+summary(emergence.lm.simple)
+anova(emergence.lm.simple)
+```
+
+# Question 4.	
+
+5 pts. Calculate the least square means for Treatment using the emmeans package and perform a Tukey separation with the compact letter display using the cld function. Interpret the results.
+
+```{r}
+lsmeans <- emmeans(emergence.lm.simple, ~Treatment) # estimate lsmeans of Treatment
+Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE) # contrast with Tukey adjustment by default. 
+Results_lsmeans
+```
+# Question 5.	
+
+4 pts. The provided function lets you dynamically add a linear model plus one factor from that model and plots a bar chart with letters denoting treatment differences. Use this model to generate the plot shown below. Explain the significance of the letters. 
+
+```{r}
+plot_cldbars_onefactor <- function(lm_model, factor) {
+  data <- lm_model$model
+  variables <- colnames(lm_model$model)
+  dependent_var <- variables[1]
+  independent_var <- variables[2:length(variables)]
+
+  lsmeans <- emmeans(lm_model, as.formula(paste("~", factor))) # estimate lsmeans 
+  Results_lsmeans <- cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE, Letters = letters) # contrast with Tukey adjustment by default.
+  
+  # Extracting the letters for the bars
+  sig.diff.letters <- data.frame(Results_lsmeans$emmeans[,1], 
+                                 str_trim(Results_lsmeans$emmeans[,7]))
+  colnames(sig.diff.letters) <- c(factor, "Letters")
+  
+  # for plotting with letters from significance test
+  ave_stand2 <- lm_model$model %>%
+    group_by(!!sym(factor)) %>%
+    dplyr::summarize(
+      ave.emerge = mean(.data[[dependent_var]], na.rm = TRUE),
+      se = sd(.data[[dependent_var]]) / sqrt(n())
+    ) %>%
+    left_join(sig.diff.letters, by = factor) %>%
+    mutate(letter_position = ave.emerge + 10 * se)
+  
+  plot <- ggplot(data, aes(x = !! sym(factor), y = !! sym(dependent_var))) + 
+    stat_summary(fun = mean, geom = "bar") +
+    stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.5) +
+    ylab("Number of emerged plants") + 
+    geom_jitter(width = 0.02, alpha = 0.5) +
+    geom_text(data = ave_stand2, aes(label = Letters, y = letter_position), size = 5) +
+    xlab(as.character(factor)) +
+    theme_classic()
+  
+  return(plot)
+}
+plot_cldbars_onefactor(emergence.lm.simple, "Treatment")
+```
+
+Treatments that share at least one letter are NOT significantly different from each other.
+
+Treatments that do not share any letters ARE significantly different.
+
+| Treatment | Letter group | Interpretation                                       |
+| --------- | ------------ | ---------------------------------------------------- |
+| 1         | ab           | not different from treatments labeled **a** or **b** |
+| 2         | c            | significantly different from all other treatments    |
+| 3         | a            | similar to treatments labeled **a**                  |
+| 4         | ab           | overlaps with **a** and **b** groups                 |
+| 5         | a            | similar to other **a** treatments                    |
+| 6         | a            | similar to other **a** treatments                    |
+| 7         | b            | similar to **b** treatments                          |
+| 8         | ab           | overlaps **a** and **b**                             |
+| 9         | ab           | overlaps **a** and **b**                             |
+
+# Question 6.
+
+2 pts. Generate the gfm .md file along with a .html, .docx, or .pdf. Commit, and push the .md file to github and turn in the .html, .docx, or .pdf to Canvas. Provide me a link here to your github.
+

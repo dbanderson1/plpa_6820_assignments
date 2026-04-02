@@ -25,6 +25,90 @@ knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 setwd(rprojroot::find_rstudio_root_file())
 ```
 
+# RENV - Environment Control
+
+The renv package helps you create reproducible environments for your R
+projects. This vignette introduces you to the basic nouns and verbs of
+renv, like the user and project libraries, and key functions like
+renv::init(), renv::snapshot() and renv::restore(). You’ll also learn
+about some of the infrastructure that makes renv tick, some problems
+that renv doesn’t help with, and how to uninstall it if you no longer
+want to use it.
+
+RENV allows you store packages in the environment in a ‘lockfile’, which
+enables you users to restore packages using the ‘lockfile’.
+
+<figure>
+<img src="renv.png" alt="RENV Figure Schematic" />
+<figcaption aria-hidden="true">RENV Figure Schematic</figcaption>
+</figure>
+
+## Install RENV
+
+``` r
+# install.packages("renv")
+library(renv)
+```
+
+    ## Warning: package 'renv' was built under R version 4.5.3
+
+    ## 
+    ## Attaching package: 'renv'
+
+    ## The following object is masked from 'package:purrr':
+    ## 
+    ##     modify
+
+    ## The following objects are masked from 'package:stats':
+    ## 
+    ##     embed, update
+
+    ## The following objects are masked from 'package:utils':
+    ## 
+    ##     history, upgrade
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     autoload, load, remove, use
+
+## RENV Initialize
+
+``` r
+# this will initialize the environment
+renv::init()
+```
+
+## Updating packages
+
+``` r
+# this will update and should be used after publications
+renv::update()
+# this will upgrade RENV but not underlying packages
+renv::upgrade()
+# snapshot updates the lockfile
+renv::snapshot() 
+```
+
+## Uninstall RENV
+
+To deactivate renv in a project, use:
+
+``` r
+renv::deactivate()
+# This removes the renv auto-loader from the project .Rprofile, but doesn’t touch any other renv files used in the project.
+#If you’d like to later re-activate renv, you can do so with
+renv::activate()
+```
+
+## Using RENV - Collaboration
+
+``` r
+renv::restore() 
+#this installs the specific package versions recorded in the lockfile.
+```
+
+# Optional Learning Bonus Material
+
 ``` r
 ### Color palletts etc. ###
 cbbPalette <- c("black", "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00")

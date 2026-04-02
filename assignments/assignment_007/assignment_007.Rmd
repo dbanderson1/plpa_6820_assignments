@@ -1,13 +1,13 @@
 ---
-title: "Coding Assignment 6 - Linear Models Notes"
+title: "Coding Assignment 7 - Linear Models Notes"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
 ---
 
 # Global Setup

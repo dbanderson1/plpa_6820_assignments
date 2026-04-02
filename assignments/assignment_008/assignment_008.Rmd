@@ -1,0 +1,177 @@
+---
+title: "Coding Assignment 8 - Optional Material Maps"
+author: "Derek Anderson"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+  md_document:
+    variant: gfm
+---
+# About 
+
+This is a script to plot sampling locations on the map for this study
+
+- **input:** NCST_SeedTreatmentTrials_FinalData_2025-02-28.rds
+- **output:** Figures 1 and Table 1
+
+It was originally developed by Zachary Noel, Auburn University 
+
+# Global Setup
+
+```{r setup, include=TRUE, message=FALSE, warning=FALSE}
+# Libraries needed
+library(tidyverse)
+# install.packages("usmap")
+library(usmap)
+# install.packages("maps")
+library(maps)
+# install.packages("mapdata")
+library(mapdata)
+# set the default global option for displaying code chunks
+knitr::opts_chunk$set(echo = TRUE)
+# this sets the root file project to the main R project directory not location of current Rmd file
+knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
+setwd(rprojroot::find_rstudio_root_file())
+```
+
+```{r eval=FALSE}
+### Color palletts etc. ###
+cbbPalette <- c("black", "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00")
+options(dplyr.print_max = 1e9)
+
+#### Read in the data needed, which is the output of the preprocessing script
+
+seedtreatment.prediction.nona <- readRDS("NCST_SeedTreatmentTrials_FinalData_2025-02-28.rds")
+
+##### Map of sampling: Figure 1. ####
+# Load in acrage planted map
+counties <- map_data("county")
+counties$State <- toupper(counties$region)
+counties$County <- toupper(counties$subregion)
+
+cotton.acres.harvested.county <- read.csv("1C1BDA3A-B866-36C2-B2AD-0FD203944B03.csv") # data downloaded from NASS
+str(cotton.acres.harvested.county)
+cotton.acres.harvested.bycounty <- cotton.acres.harvested.county %>%
+  group_by(State, County) %>%
+  summarise(mean.acres.harvested = mean(Value))
+
+state.data <- map_data("state")
+state.data$State <- toupper(state.data$region)
+
+state.data2 <- state.data %>%
+  subset(State %in% c("ALABAMA",
+                      "FLORIDA",
+                      "TEXAS", 
+                      "ARKANSAS",
+                      "MISSISSIPPI",
+                      "SOUTH CAROLINA",
+                      "NORTH CAROLINA",
+                      "VIRGINIA",
+                      "LOUISIANA",
+                      "TENNESSEE",
+                      "GEORGIA",
+                      "OKLAHOMA"))
+
+cotton.acres.harvested.bycounty2 <- left_join(counties, cotton.acres.harvested.bycounty, by = c("State", "County"))
+cotton.acres.harvested.bycounty.plot <- cotton.acres.harvested.bycounty2 %>%
+  subset(State %in% c("ALABAMA",
+                      "FLORIDA",
+                      "TEXAS", 
+                      "ARKANSAS",
+                      "MISSISSIPPI",
+                      "SOUTH CAROLINA",
+                      "NORTH CAROLINA",
+                      "VIRGINIA",
+                      "LOUISIANA",
+                      "TENNESSEE",
+                      "GEORGIA",
+                      "OKLAHOMA")) 
+
+# convert to hectares
+cotton.acres.harvested.bycounty.plot$Hectares <- cotton.acres.harvested.bycounty.plot$mean.acres.harvested*0.404686
+map.points <- seedtreatment.prediction.nona %>%
+  group_by(Long, Lat) %>%
+  tally()
+
+##### Figure 1 ####
+Fig1 <- ggplot() + 
+  geom_polygon(data = cotton.acres.harvested.bycounty.plot, mapping=aes(x=long, y=lat, group=group, fill = Hectares), color = "grey", size = 0.05) + 
+  geom_polygon(data = state.data2, mapping = aes(x = long, y = lat, group = group), color = "black", fill = NA) +
+  scale_fill_gradient(high = "#4F7942", low = "#ECFFDC", na.value = "white", name = "Ave. Hectares \n Upland Cotton \n Harvested 1993-2023") +
+  geom_point(data = map.points, aes(x = Long, y = Lat, size = n), fill = cbbPalette[[8]], color = "black", alpha = 0.6, shape = 21) +
+  scale_size(name = "Years in \n National Cotton \n Seedtreatment Trials") +
+  theme_minimal() +
+  theme(legend.position="right") +
+  coord_map("albers",  lat0 = 45.5, lat1 = 29.5) +
+  xlab("Longitude") +
+  ylab("Latitude")
+Fig1
+
+#### Summary statistics for percentage of land on average with these states. Justification for the samples. ####
+cotton.acres.harvested.summary <- cotton.acres.harvested.county %>%
+  group_by(State, Year) %>%
+  summarise(sum.acres.harvested = sum(Value)) %>%
+  group_by(State) %>%
+  summarise(mean.acres.harvested = mean(sum.acres.harvested)) 
+
+cotton.acres.harvested.summary$percent <- 100 *(cotton.acres.harvested.summary$mean.acres.harvested/sum(cotton.acres.harvested.summary$mean.acres.harvested))
+
+cotton.acres.harvested.summary %>%
+  subset(State %in% c("ALABAMA",
+                      "FLORIDA",
+                      "TEXAS", 
+                      "ARKANSAS",
+                      "MISSISSIPPI",
+                      "VIRGINIA",
+                      "LOUISIANA",
+                      "TENNESSEE",
+                      "GEORGIA",
+                      "OKLAHOMA")) %>%
+  summarise(sum.sampled = sum(percent)) 
+
+
+#### General Summary Statistics: Table 1 ####
+
+# Earliest and latest planting date to select weather data interval
+date.moth.day <- format(seedtreatment.prediction.nona$Planted, format="%m-%d")
+sort(date.moth.day)
+
+# 10 site-years were planted in February or June. 
+# 97.5% of the site-years planted in March to May
+(dim(seedtreatment.prediction.nona)[[1]] - 10)/dim(seedtreatment.prediction.nona)[[1]] 
+
+# Number of trials per state
+trials.per.state <- seedtreatment.prediction.nona %>%
+  group_by(State) %>%
+  summarise(min.trial.date = min(Year2),
+            max.trial.date = max(Year2),
+            n.trials = n())
+
+# Unique locations per state
+unique.per.state <- seedtreatment.prediction.nona %>%
+  group_by(State, Field_Location_Code, Lat, Long) %>%
+  summarise(n.trials = n(),
+            min.trial.date = min(Year2),
+            max.trial.date = max(Year2)) %>%
+  mutate(n_years = max.trial.date - min.trial.date) %>%
+  group_by(State) %>%
+  tally()
+
+table.1 <- left_join(trials.per.state, unique.per.state)
+
+sum(table.1$n.trials) # 405 trials
+sum(table.1$n) # 38 unique locations
+
+# Locations table
+loc.table <- seedtreatment.prediction.nona %>%
+  group_by(State, Field_Location_Code, Lat, Long) %>%
+  summarise(n.trials = n(),
+            min.trial.date = min(Year2),
+            max.trial.date = max(Year2))
+
+
+
+```
+

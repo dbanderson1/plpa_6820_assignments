@@ -1,5 +1,5 @@
 ---
-title: "Coding Assignment 8 - Optional Material Notes -"
+title: "Coding Assignment 8 - Optional Material Notes & RENV"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
@@ -85,7 +85,38 @@ renv::restore()
 #this installs the specific package versions recorded in the lockfile.
 ```
 
+# Notes on Difficult Portions
+
+## Subsetting
+
+```{r}
+mtcars
+
+#subsetting
+mtcars[1,] # 1st row
+mtcars[1,3] # row 1, column 3
+
+# find all rows such that VS = 1 : 2 ways
+mtcars[mtcars$vs == 1,]
+subset(mtcars, vs == 1)
+# just the hp
+mtcars$hp[mtcars$vs == 1]
+
+# multiple
+mtcars[mtcars$vs == 1 & mtcars$gear == 4,]
+
+# car with most hp
+max(mtcars$hp)
+
+#max or min value
+mtcars[mtcars$hp == max(mtcars$hp),]
+mtcars[mtcars$hp == min(mtcars$hp),]
+
+```
+
 # Optional Learning Bonus Material
+
+## Provided Bonus Material
 
 ```{r eval=FALSE}
 ### Color palletts etc. ###
@@ -225,4 +256,7 @@ loc.table <- seedtreatment.prediction.nona %>%
 
 
 ```
+
+## Self Learning Bonus Material -lme()
+
 

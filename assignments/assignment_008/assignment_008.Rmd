@@ -1,13 +1,13 @@
 ---
-title: "Coding Assignment 8 - Optional Material Maps"
+title: "Coding Assignment 8 - Optional Material Notes -"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
-  md_document:
-    variant: gfm
   html_document:
     toc: true
     toc_float: true
+  md_document:
+    variant: gfm
 ---
 # About 
 
@@ -35,6 +35,15 @@ knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 setwd(rprojroot::find_rstudio_root_file())
 ```
+# RENV - Environment Control
+
+The renv package helps you create reproducible environments for your R projects. This vignette introduces you to the basic nouns and verbs of renv, like the user and project libraries, and key functions like renv::init(), renv::snapshot() and renv::restore(). You’ll also learn about some of the infrastructure that makes renv tick, some problems that renv doesn’t help with, and how to uninstall it if you no longer want to use it.
+
+RENV allows you store packages in the environment in a 'lockfile', which enables you users to restore packages using the 'lockfile'.
+
+(renv.png)
+
+# Optional Learning Bonus Material
 
 ```{r eval=FALSE}
 ### Color palletts etc. ###

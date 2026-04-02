@@ -11,9 +11,9 @@
 
 <meta name="author" content="Derek Anderson" />
 
-<meta name="date" content="2026-04-01" />
+<meta name="date" content="2026-04-02" />
 
-<title>Coding Assignment 8 - Optional Material Maps</title>
+<title>Coding Assignment 8 - Optional Material Notes -</title>
 
 <script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
 // be compatible with the behavior of Pandoc < 2.8).
@@ -1480,9 +1480,9 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">Coding Assignment 8 - Optional Material
-Maps</h1>
+Notes -</h1>
 <h4 class="author">Derek Anderson</h4>
-<h4 class="date">2026-04-01</h4>
+<h4 class="date">2026-04-02</h4>
 
 </div>
 
@@ -1513,6 +1513,22 @@ knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
 knitr::opts_knit$set(root.dir = rprojroot::find_rstudio_root_file())
 setwd(rprojroot::find_rstudio_root_file())</code></pre>
+</div>
+<div id="renv---environment-control" class="section level1">
+<h1>RENV - Environment Control</h1>
+<p>The renv package helps you create reproducible environments for your
+R projects. This vignette introduces you to the basic nouns and verbs of
+renv, like the user and project libraries, and key functions like
+renv::init(), renv::snapshot() and renv::restore(). You’ll also learn
+about some of the infrastructure that makes renv tick, some problems
+that renv doesn’t help with, and how to uninstall it if you no longer
+want to use it.</p>
+<p>RENV allows you store packages in the environment in a ‘lockfile’,
+which enables you users to restore packages using the ‘lockfile’.</p>
+<p>(renv.png)</p>
+</div>
+<div id="optional-learning-bonus-material" class="section level1">
+<h1>Optional Learning Bonus Material</h1>
 <pre class="r"><code>### Color palletts etc. ###
 cbbPalette &lt;- c(&quot;black&quot;, &quot;#999999&quot;, &quot;#E69F00&quot;, &quot;#56B4E9&quot;, &quot;#009E73&quot;, &quot;#F0E442&quot;, &quot;#0072B2&quot;, &quot;#D55E00&quot;)
 options(dplyr.print_max = 1e9)

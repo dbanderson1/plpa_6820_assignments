@@ -3,11 +3,11 @@ title: "README"
 author: "Derek Anderson"
 date: "`r Sys.Date()`"
 output:
+  md_document:
+    variant: gfm
   html_document:
     toc: true
     toc_float: true
-  md_document:
-    variant: gfm
   word_document:
   pdf_document:
 ---
@@ -44,6 +44,7 @@ For ease of reference here are links to graded files:
   - [assingment_5.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_005/assignment_005.md), [assingment_5.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_005/assignment_005.Rmd)
   - [assingment_6.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.md), [assingment_6.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_006/assignment_006.Rmd)
   - [assingment_7.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_007/assignment_007.md), [assingment_7.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_007/assignment_007.Rmd)
+  - [assingment_8.md](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_008/assignment_008.md), [assingment_8.Rmd](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/assignments/assignment_008/assignment_008.Rmd)
  
 - coding challenges
   - [coding_challenge_1](https://github.com/dbanderson1/plpa_6820_assignments/blob/main/coding_challenges/coding_challenge_1/coding_challenge_1.R)

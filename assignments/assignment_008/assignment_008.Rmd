@@ -29,6 +29,8 @@ library(usmap)
 library(maps)
 # install.packages("mapdata")
 library(mapdata)
+# install.package("lme4)
+library(lme4)
 # set the default global option for displaying code chunks
 knitr::opts_chunk$set(echo = TRUE)
 # this sets the root file project to the main R project directory not location of current Rmd file
@@ -117,6 +119,8 @@ mtcars[mtcars$hp == min(mtcars$hp),]
 # Optional Learning Bonus Material
 
 ## Provided Bonus Material
+
+I don't work with map data but I do work with a lot of population health data. In the future It would be interesting to plot things like BMI, body fat % at a county level, which I haven't seen in a publication.
 
 ```{r eval=FALSE}
 ### Color palletts etc. ###
@@ -257,6 +261,313 @@ loc.table <- seedtreatment.prediction.nona %>%
 
 ```
 
-## Self Learning Bonus Material -lme()
+## Self Learning Bonus Material 
 
+### Adding significance letters to represent multiple pairwise comparisons of an ANOVA
+
+This is from a previous weeks homework but we weren't provided the data set. I've gone back with the data set now available to complete.
+
+For my dissertation I will be using linear mixed effects modeling so I want to become better versed in this type of analysis.
+
+```{r}
+library(lme4)
+library(emmeans) #version 1.8.7
+library(multcomp)
+library(multcompView)
+```
+
+### Read in the data
+
+```{r}
+STAND <- read.csv("data_files/raw_data_valent2023_pythium_seedtreatment.csv", na.strings = "na")
+```
+
+### Calculate the means by groups
+
+```{r}
+ave_stand <- STAND %>%
+  filter(days_post_planting != "173 days after planting") %>%
+  group_by(Plot, Treatment_name, Rep, days_post_planting) %>%
+  dplyr::summarize(
+    ave.stand = mean(stand, na.rm=TRUE)) 
+
+#Linear model
+lm <- lmer(ave.stand ~ Treatment_name*days_post_planting + (1|Rep), data = ave_stand)
+car::Anova(lm)
+
+lsmeans <- emmeans(lm, ~Treatment_name|days_post_planting) # estimate lsmeans of variety within siteXyear
+Results_lsmeansEC <- multcomp::cld(lsmeans, alpha = 0.05, reversed = TRUE, details = TRUE,  Letters = letters) # contrast with Tukey ajustment
+Results_lsmeansEC
+```
+
+### Extracting letters for the bars
+
+```{r}
+# Extracting the letters for the bars
+sig.diff.letters <- data.frame(Results_lsmeansEC$emmeans$Treatment_name, 
+                               Results_lsmeansEC$emmeans$days_post_planting,
+                               str_trim(Results_lsmeansEC$emmeans$.group))
+colnames(sig.diff.letters) <- c("Treatment_name", 
+                                "days_post_planting",
+                                "Letters")
+
+# for plotting with letters from significance test
+ave_stand2 <- ave_stand %>%
+  group_by(Treatment_name, days_post_planting) %>%
+  dplyr::summarize(
+    ave.stand2 = mean(ave.stand, na.rm=TRUE),
+    se = sd(ave.stand)/sqrt(4)) %>%
+  left_join(sig.diff.letters) 
+
+ave_stand$Treatment_name <- factor(ave_stand$Treatment_name, levels = c("Neg. control",
+                                                                        "Pos. control",
+                                                                        "Intego Suite",
+                                                                        "V-10525",
+                                                                        "Cruiser Maxx",
+                                                                        "Cruiser Maxx + Vayantis",
+                                                                        "V-10522",
+                                                                        "V-10522 + Lumisena"))
+
+ave_stand$days_post_planting <- factor(ave_stand$days_post_planting, levels = c("8 days after planting",
+                                                                                "15 days after planting", 
+                                                                                "21 days after planting",
+                                                                                "29 days after planting"))
+
+```
+
+### Final Plot
+
+Here is the final plot with letters on the bars
+
+```{r}
+### Stand bars ####
+ggplot(ave_stand, aes(x = Treatment_name, y = ave.stand)) + 
+  stat_summary(fun=mean,geom="bar") +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.5) +
+  ylab("Number of emerged plants") + 
+  geom_jitter(width = 0.02, alpha = 0.5) +
+  geom_text(data = ave_stand2, aes(label = Letters, y = ave.stand2+(3*se)), vjust = -0.5) +
+  xlab("")+
+  theme_classic() +
+  theme(
+    strip.background = element_rect(color="white", fill="white", size=1.5, linetype="solid"),
+    strip.text.x = element_text(size = 12, color = "black"),
+    axis.text.x = element_text(angle = 45, vjust = 1, hjust=1)) +
+  facet_wrap(~days_post_planting)
+```
+
+### Fake Weight Loss Data
+
+I used Claude to generate a fake data set that mirrors what I anticipate seeing in my actual data set. From there I used lme4, lmerTest, and ggplot to generate a graph of weight and body fat% changes over time.
+
+```{r}
+# ============================================================
+# Linear Mixed Effects Modeling: GLP-1 vs Non-GLP-1 Weight Loss
+# ============================================================
+
+# -- Load libraries --
+# lme4: fits the mixed effects models
+# lmerTest: adds p-values to lme4 output (lme4 alone won't give you p-values)
+# ggplot2: creates publication-quality graphs
+library(lme4)
+# install.packages("lmerTest")
+library(lmerTest)  # you NEED this — without it, summary() won't show p-values
+library(ggplot2)
+
+# -- Read in the data --
+df <- read.csv("data_files/weight_loss_data.csv")
+
+# -- Inspect the structure --
+# Always check your data before modeling
+str(df)
+head(df)
+
+# -- Make sure treatment is a factor --
+# R needs to know this is a categorical variable, not just text
+df$treatment <- factor(df$treatment)
+
+# -- Quick look at how many visits each person has --
+# This shows the unbalanced design (some have 2 visits, some have 12)
+# Mixed models handle this gracefully — that's a big reason we use them
+table(table(df$participant_id))
+
+
+# ============================================================
+# MODEL 1: Weight over time by treatment group
+# ============================================================
+
+# Formula breakdown:
+#   weight_lbs ~ days_since_baseline * treatment
+#     - This is the FIXED effects part (the population-level trends)
+#     - "days_since_baseline" = effect of time on weight
+#     - "treatment" = difference between groups at baseline
+#     - The "*" gives you the INTERACTION: does the rate of weight
+#       change differ between GLP-1 and Non-GLP-1? (this is your key test)
+#
+#   (1 + days_since_baseline | participant_id)
+#     - This is the RANDOM effects part (individual-level variation)
+#     - "1" = each person gets their own intercept (starting weight varies)
+#     - "days_since_baseline" = each person gets their own slope (rate of
+#       change varies person to person)
+#     - "| participant_id" = these random effects are grouped by person
+
+weight_model <- lmer(
+  weight_lbs ~ days_since_baseline * treatment + (1 + days_since_baseline | participant_id),
+  data = df
+)
+
+# -- View results --
+# The key line to look at is "days_since_baseline:treatmentNon-GLP-1"
+# A significant p-value here means the two groups lose weight at different RATES
+summary(weight_model)
+
+
+# ============================================================
+# MODEL 2: Body fat % over time by treatment group
+# ============================================================
+
+# Same logic as above, just swapping the outcome variable
+bf_model <- lmer(
+  body_fat_pct ~ days_since_baseline * treatment + (1 + days_since_baseline | participant_id),
+  data = df
+)
+
+summary(bf_model)
+
+
+# ============================================================
+# GRAPH 1: Weight loss over time by treatment group
+# ============================================================
+
+# This plot shows:
+#   - Each thin line = one participant's trajectory (raw data)
+#   - The thick line = the model-predicted average trend per group
+#   - The shaded ribbon = 95% confidence interval around that trend
+
+# -- Generate predicted values from the model --
+# We create a grid of time points for each group and ask the model
+# to predict weight at those points (this gives us smooth trend lines)
+pred_grid_wt <- expand.grid(
+  days_since_baseline = seq(0, 365, by = 1),
+  treatment = levels(df$treatment)
+)
+
+# predict() with re.form = NA ignores random effects — gives you the
+# population-average prediction (fixed effects only), which is what
+# you want for the group-level trend line
+pred_grid_wt$predicted <- predict(weight_model, newdata = pred_grid_wt, re.form = NA)
+
+# -- Build the plot --
+ggplot() +
+  # Layer 1: individual trajectories (faint lines showing raw data)
+  geom_line(
+    data = df,
+    aes(x = days_since_baseline, y = weight_lbs,
+        group = participant_id, color = treatment),
+    alpha = 0.15, linewidth = 0.4
+  ) +
+  # Layer 2: model-predicted group trend lines (the "result")
+  geom_line(
+    data = pred_grid_wt,
+    aes(x = days_since_baseline, y = predicted, color = treatment),
+    linewidth = 1.5
+  ) +
+  # -- Labels and appearance --
+  labs(
+    title = "Weight Loss Over Time: GLP-1 vs Non-GLP-1",
+    x = "Days Since Baseline",
+    y = "Weight (lbs)",
+    color = "Treatment"
+  ) +
+  theme_minimal(base_size = 14) +
+  scale_color_manual(values = c("GLP-1" = "#E63946", "Non-GLP-1" = "#457B9D"))
+
+
+# ============================================================
+# GRAPH 2: Body fat % over time by treatment group
+# ============================================================
+
+# Same approach as weight graph
+pred_grid_bf <- expand.grid(
+  days_since_baseline = seq(0, 365, by = 1),
+  treatment = levels(df$treatment)
+)
+pred_grid_bf$predicted <- predict(bf_model, newdata = pred_grid_bf, re.form = NA)
+
+ggplot() +
+  geom_line(
+    data = df,
+    aes(x = days_since_baseline, y = body_fat_pct,
+        group = participant_id, color = treatment),
+    alpha = 0.15, linewidth = 0.4
+  ) +
+  geom_line(
+    data = pred_grid_bf,
+    aes(x = days_since_baseline, y = predicted, color = treatment),
+    linewidth = 1.5
+  ) +
+  labs(
+    title = "Body Fat % Over Time: GLP-1 vs Non-GLP-1",
+    x = "Days Since Baseline",
+    y = "Body Fat (%)",
+    color = "Treatment"
+  ) +
+  theme_minimal(base_size = 14) +
+  scale_color_manual(values = c("GLP-1" = "#E63946", "Non-GLP-1" = "#457B9D"))
+
+
+# ============================================================
+# ABOUT YOUR OTHER PACKAGES (you asked if you need them)
+# ============================================================
+
+# emmeans: Estimated Marginal Means — useful when you want to compare
+#   groups at a SPECIFIC time point (e.g., "at day 180, what's the
+#   predicted difference between GLP-1 and Non-GLP-1?"). You don't
+#   need it for this basic analysis, but you WILL need it for your
+#   dissertation if you want post-hoc pairwise comparisons.
+#
+# multcomp / multcompView: these handle multiple comparison corrections
+#   (e.g., Tukey, Bonferroni). Useful when you have 3+ groups and need
+#   to compare all pairs while controlling Type I error. With only 2
+#   groups here, you don't need them yet — but keep them installed for
+#   when your design gets more complex.
+
+# -- Quick emmeans example (uncomment to try) --
+# library(emmeans)
+# # Compare groups at day 180
+# emm <- emmeans(weight_model, ~ treatment, at = list(days_since_baseline = 180))
+# pairs(emm)  # gives you the pairwise contrast with CI and p-value
+
+
+# ============================================================
+# HOW TO READ YOUR OUTPUT
+# ============================================================
+#
+# In summary(weight_model), focus on the Fixed Effects table:
+#
+#   (Intercept)                              = average baseline weight
+#   days_since_baseline                      = daily weight change for GLP-1 (reference group)
+#   treatmentNon-GLP-1                       = baseline weight difference between groups
+#   days_since_baseline:treatmentNon-GLP-1   = THE KEY TEST — does the slope
+#                                              differ between groups?
+#
+# If that interaction term is significant (p < .05), you can say:
+# "The rate of weight loss significantly differed between treatment
+#  groups, with the GLP-1 group showing greater weight loss over time."
+#
+# Same interpretation applies to the body fat model.
+```
+```{r}
+# -- Quick emmeans example --
+library(emmeans)
+# # Compare groups at day 180
+emm <- emmeans(weight_model, ~ treatment, at = list(days_since_baseline = 180))
+pairs(emm)  # gives you the pairwise contrast with CI and p-value
+```
+
+At day 180, the GLP-1 group weighs an estimated 12.9 lbs less than the Non-GLP-1 group. The negative sign just means GLP-1 (the first group in the contrast) has the lower weight — which is exactly what you want to see.
+
+The t-ratio of -3.82 with p = 0.0002 is strongly significant, and the Kenward-Roger degrees of freedom method is the right one for mixed models (it's more conservative and accurate than the default Satterthwaite, so committees like seeing it).
+
+One thing to note: your estimate says -12.9, but remember this is the difference at a single snapshot (day 180). Your interaction term from summary() is actually the more important result for your dissertation because it tests whether the trajectories differ — not just one time point. The emmeans contrast is a nice complement to that, giving you a concrete, interpretable number ("by 6 months, the GLP-1 group had lost ~13 lbs more").
 

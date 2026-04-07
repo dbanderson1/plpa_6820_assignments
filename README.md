@@ -90,22 +90,32 @@ fs::dir_tree()
 │   │   └── assignment_006_files
 │   │       └── figure-gfm
 │   │           └── unnamed-chunk-15-1.png
-│   └── assignment_007
-│       ├── assignment_007.html
-│       ├── assignment_007.md
-│       ├── assignment_007.Rmd
-│       └── assignment_007_files
-│           └── figure-gfm
-│               ├── unnamed-chunk-10-1.png
-│               ├── unnamed-chunk-13-1.png
-│               ├── unnamed-chunk-14-1.png
-│               ├── unnamed-chunk-19-1.png
-│               ├── unnamed-chunk-2-1.png
-│               ├── unnamed-chunk-20-1.png
-│               ├── unnamed-chunk-3-1.png
-│               ├── unnamed-chunk-7-1.png
-│               ├── unnamed-chunk-8-1.png
-│               └── unnamed-chunk-9-1.png
+│   ├── assignment_007
+│   │   ├── assignment_007.html
+│   │   ├── assignment_007.md
+│   │   ├── assignment_007.Rmd
+│   │   └── assignment_007_files
+│   │       └── figure-gfm
+│   │           ├── unnamed-chunk-10-1.png
+│   │           ├── unnamed-chunk-13-1.png
+│   │           ├── unnamed-chunk-14-1.png
+│   │           ├── unnamed-chunk-19-1.png
+│   │           ├── unnamed-chunk-2-1.png
+│   │           ├── unnamed-chunk-20-1.png
+│   │           ├── unnamed-chunk-3-1.png
+│   │           ├── unnamed-chunk-7-1.png
+│   │           ├── unnamed-chunk-8-1.png
+│   │           └── unnamed-chunk-9-1.png
+│   └── assignment_008
+│       ├── assignment_008.html
+│       ├── assignment_008.md
+│       ├── assignment_008.Rmd
+│       ├── assignment_008_files
+│       │   └── figure-gfm
+│       │       ├── unnamed-chunk-12-1.png
+│       │       ├── unnamed-chunk-13-1.png
+│       │       └── unnamed-chunk-13-2.png
+│       └── renv.png
 ├── coding_challenges       # Folder for Coding Challenges
 │   ├── coding_challenge_1
 │   │   └── coding_challenge_1.R
@@ -149,11 +159,15 @@ fs::dir_tree()
 │   ├── EC50_all.csv
 │   ├── Metadata.csv
 │   ├── MycotoxinData.csv
-│   └── TipsR.csv
+│   ├── PlantEmergence.csv
+│   ├── raw_data_valent2023_pythium_seedtreatment.csv
+│   ├── TipsR.csv
+│   └── weight_loss_data.csv
 ├── plpa_6820_assignments.Rproj # Top level R Project
 ├── README.html
 ├── README.md               # Top level directory README
-└── README.Rmd
+├── README.Rmd
+└── renv # This is the top level RENV which controls versions required to ensure the script populates the same results
 ```
 
 ## How to Use

@@ -405,10 +405,10 @@ loc.table <- seedtreatment.prediction.nona %>%
 ### Adding significance letters to represent multiple pairwise comparisons of an ANOVA
 
 This is from a previous weeks homework but we weren’t provided the data
-set. I’ve gone back with the data set now available to complete.
-
-For my dissertation I will be using linear mixed effects modeling so I
-want to become better versed in this type of analysis.
+set. I’ve gone back with the data set now available to complete. For my
+dissertation I will be using linear mixed effects modeling so I want to
+become better versed in this type of analysis and various things that
+can be used within the package.
 
 ``` r
 library(lme4)
@@ -875,9 +875,11 @@ ggplot(ave_stand, aes(x = Treatment_name, y = ave.stand)) +
 
 ### Fake Weight Loss Data
 
-I used Claude to generate a fake data set that mirrors what I anticipate
-seeing in my actual data set. From there I used lme4, lmerTest, and
-ggplot to generate a graph of weight and body fat% changes over time.
+I used Claude to generate a fake data set that mirrors two of thed DVs
+that I anticipate seeing in my actual data set. From there I used lme4,
+lmerTest, and ggplot to generate a graph of weight and body fat% changes
+over time. The reason I did this is to start to familiarize myself with
+the types of analyses I will have to conduct.
 
 ``` r
 # ============================================================
@@ -1196,7 +1198,7 @@ ggplot() +
 
 ``` r
 # ============================================================
-# ABOUT YOUR OTHER PACKAGES (you asked if you need them)
+# OTHER POTENTIAL USEFUL PACKAGES
 # ============================================================
 
 # emmeans: Estimated Marginal Means — useful when you want to compare
